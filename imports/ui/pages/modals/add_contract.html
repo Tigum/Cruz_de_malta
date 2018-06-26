@@ -1,0 +1,63 @@
+<template name="add_contract">
+    <div class="modal fade" id="add_contract_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{#unless editMode}}
+                    <h5 class="modal-title" id="add_region_modal_Label">Adicionar novo contrato</h5>
+                    {{else}}
+                    <h5 class="modal-title" id="add_region_modal_Label">Editar contrato</h5>
+                    {{/unless}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label model-item-text">Placa:</label>
+                            <input type="text" class="form-control contract_plate" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name2" class="col-form-label model-item-text">Renavam (opcional):</label>
+                            <input type="text" class="form-control contract_renavam" id="recipient-name2">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name3" class="col-form-label model-item-text">Chassis:</label>
+                            <input type="text" class="form-control contract_chassis" id="recipient-name3">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name4" class="col-form-label model-item-text">Patio:</label>
+                            <input type="text" class="form-control contract_patio" id="recipient-name4">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="recipient-name5" class="col-form-label model-item-text">Valor adicional (em R$):</label>
+                            <input type="number" class="form-control contract_value" id="recipient-name5">
+                        </div> -->
+                        <br>
+                        {{#unless editMode}}
+                        <div class="form-group">
+                            <select class="custom-select custom-select-lg mb-3 contract_region uppercase">
+                                <option value="0" selected>Selecione a região</option>
+                                {{#if Template.subscriptionsReady}}
+                                    {{#each regions}}
+                                        <option class="uppercase" value="{{this.name}}">{{this.name}} - {{formatPrice this.price}}</option>
+                                    {{/each}}
+                                {{/if}}
+                            </select>
+                        </div>
+                        {{/unless}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
+                    {{#if editMode}}
+                    <button type="button" class="btn btn-primary buttonModalEdit">Salvar</button>
+                    {{else}}
+                    <button type="button" class="btn btn-primary buttonModalSave">Adicionar contrato</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,73 @@
+<template name="add_value">
+    <div class="modal fade" id="add_value_modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_region_modal_Label">Adicionar novo valor ao contrato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio1" name="customRadio" data-debit="Débito" class="custom-control-input debitSelected">
+                            <label class="custom-control-label" for="customRadio1">Débito</label>
+                        </div>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="customRadio2" name="customRadio" data-credit="Crédito" class="custom-control-input creditSelected">
+                            <label class="custom-control-label" for="customRadio2">Crédito</label>
+                        </div>
+                        <br> 
+                        {{#if debitIsSelected}}
+                        <div class="form-group animated fadeIn">
+                            <select class="custom-select custom-select-lg mb-3 uppercase chosen_reason_debit ">
+                                <option value="0" selected>Selecione a razão do débito</option>
+                                {{#each reasonsDebit}}
+                                <option class="uppercase" value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group animated fadeIn margintop16px">
+                            <a class="linkConfig addNewReasonDebit" data-reason="debit">Adicionar nova razão (débito)</a>
+                        </div>
+                        <div class="form-group animated fadeIn">
+                            <label for="recipient-name" class="col-form-label model-item-text">Digite o valor do débito:</label>
+                            <input type="number" class="form-control reason_value_debit" id="recipient-name">
+                        </div>
+                        {{/if}} 
+                        
+                        {{#if creditIsSelected}}
+                        <div class="form-group animated fadeIn">
+                            <select class="custom-select custom-select-lg mb-3 uppercase chosen_reason_credit">
+                                <option value="not_selected" selected>Selecione a razão do crédito</option>
+                                {{#each reasonsCredit}}
+                                <option class="uppercase" value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group animated fadeIn margintop16px">
+                            <a class="linkConfig addNewReasonCredit" data-reason="credit">Adicionar nova razão (crédito)</a>
+                        </div>
+                        <div class="form-group animated fadeIn">
+                            <label for="recipient-name" class="col-form-label model-item-text">Digite o valor do crédito:</label>
+                            <input type="number" class="form-control reason_value_credit" id="recipient-name">
+                        </div>
+                        {{/if}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
+                    {{#if debitIsSelected}}
+                    <button type="button" class="btn btn-primary buttonModalSave" data-reason-info="debit">Salvar</button>
+                    {{/if}}
+                    {{#if creditIsSelected}}
+                    <button type="button" class="btn btn-primary buttonModalSave" data-reason-info="credit">Salvar</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

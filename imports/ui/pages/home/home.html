@@ -1,0 +1,37 @@
+<template name="contracts">
+    <table class="table table-striped animated fadeIn">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th scope="col">Placa</th>
+                <th scope="col">Renavam</th>
+                <th scope="col">Chassis</th>
+                <th scope="col">Pátio</th>
+                <th scope="col">Região</th>
+                <th scope="col">Resumo financeiro</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {{#each contract in contracts}} {{> contract_item content=contract}} {{/each}}
+        </tbody>
+    </table>
+    {{> add_value}}
+    {{> add_reason}}
+</template>
+
+<template name="contract_item">
+    <tr>
+        <td>{{content.plate}}</td>
+        <td>{{content.renavam}}</td>
+        <td>{{content.chassis}}</td>
+        <td>{{content.patio}}</td>
+        <td class="uppercase">{{content.region.name}} - {{formatPrice content.region.price}}</td>
+        <td class="alert alert-success">Lucro de {{formatPrice content.region.price}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
+        <td>
+            <a class="linkConfig addValueToContract" data-contract-id={{content._id}}>Adicionar valor</a> &nbsp; &nbsp;
+            <a class="linkConfig editContract" data-contract-id={{content._id}}>Editar</a> &nbsp; &nbsp;
+            <a class="linkConfig deleteContract" data-contract-id={{content._id}}>Deletar</a>
+        </td>
+    </tr>
+    {{> add_contract}}
+</template>
