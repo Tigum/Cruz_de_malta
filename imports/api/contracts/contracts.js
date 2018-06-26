@@ -79,6 +79,15 @@ Contracts.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
+  balance: {
+    type: Number,
+    optional: true,
+    decimal: true
+  },
+  profitable: {
+    type: Boolean,
+    optional: true
+  }
 });
 
 Contracts.attachSchema(Contracts.schema);
@@ -92,7 +101,9 @@ Contracts.publicFields = {
     region: 1,
     value: 1,
     debitsAndCredits: 1,
-    status: 1
+    status: 1,
+    balance: 1,
+    profitable: 1
 };
 
 Contracts.deny({

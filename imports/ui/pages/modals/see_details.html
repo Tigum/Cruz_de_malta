@@ -1,0 +1,52 @@
+<template name="see_details">
+    <div class="modal fade" id="see_details_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_region_modal_Label">Detalhes do contrato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li>
+                                    <h4 class="uppercase colorGreen">VALOR DO HONORÁRIO -> R${{contractValue}}</h4>
+                                </li>
+                                {{#each values}} 
+                                {{#if isDebit this.type}}
+                                <li>
+                                    <h4 class="uppercase colorRed">{{this.reason}} -> {{formatNegativePrice this.value}} ({{this.type}}) &nbsp;
+                                        <a class="linkConfig noUppercase removeValueFromContract"
+                                            data-value-id="{{this.id}}">Remover</a>
+                                    </h4>
+                                </li>
+                                {{else}}
+                                <li>
+                                    <h4 class="uppercase colorBlue">{{this.reason}} -> R${{this.value}} ({{this.type}}) &nbsp;
+                                        <a class="linkConfig noUppercase removeValueFromContract"
+                                            data-value-id="{{this.id}}">Remover</a>
+                                    </h4>
+                                </li>
+                                {{/if}} 
+                                {{/each}}
+                            </ul>
+                            <hr> 
+                            {{#if isProfit}}
+                            <h3 class="uppercase colorGreen marginLeftDetails">Valor do lucro: R${{formatNegativePrice balance}}</h3>
+                            {{else}}
+                            <h3 class="uppercase colorRed marginLeftDetails">Valor do prejuízo: {{formatNegativePrice balance}}</h3>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Voltar</button>
+                    <!-- <button type="button" class="btn btn-primary buttonModalSave">Adicionar</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -2,6 +2,7 @@ import './home.html';
 import '../modals/add_contract.js';
 import '../modals/add_value.js';
 import '../modals/add_reason.js';
+import '../modals/see_details.js';
 import { Contracts } from '../../../api/contracts/contracts';
 import { Regions } from '../../../api/regions/regions';
 
@@ -13,7 +14,7 @@ Template.contracts.onCreated(function () {
 })
 
 Template.contracts.helpers({
-    contracts: () => Contracts.find() ? Contracts.find().fetch() : [],
+    contracts: () => Contracts.find() ? Contracts.find({}, {sort:{createdAt:-1}}).fetch() : [],
 });
 
 Template.contract_item.helpers({
@@ -22,6 +23,40 @@ Template.contract_item.helpers({
     },
     regionPrice(regionId) {
         return Regions.findOne({_id: regionId}) ? Regions.findOne({_id: regionId}).price : []
+    },
+    balance(contractId) {
+        
+        const contract = Contracts.findOne({_id: contractId})
+        const values = contract.debitsAndCredits
+        let valuesArray = [contract.region.price]
+        if(!values) {
+            Meteor.call('contracts.addbalance', contractId, contract.region.price, true)
+            return contract.region ? 'R$'+contract.region.price.toFixed(2) : 'Não há honorários'
+        }
+        values.map(function(element){
+            if(element.value){
+                valuesArray.push(element.value)
+            }
+        })
+
+        const sum = valuesArray.reduce(add, 0);
+        function add(a, b) {return a + b}
+
+        if(sum == contract.balance && contract.balance){
+            if(sum > 0){
+                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
+            }else{
+                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
+            }
+        }else{
+            if(sum > 0){
+                Meteor.call('contracts.addbalance', contractId, sum, true)
+                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
+            }else{
+                Meteor.call('contracts.addbalance', contractId, sum, false)
+                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
+            }
+        }
     }
 });
 
@@ -60,5 +95,12 @@ Template.contract_item.events({
         Session.set('contractId', contractId)
         const doc = Contracts.findOne({_id: contractId})
         $('#add_value_modal').modal('show');
+    },
+    'click .seeContractDetails'(event, template) {
+        event.preventDefault();
+        const clickedItem = $(event.currentTarget);
+        const contractId = clickedItem.attr('data-contract-id')
+        Session.set('contractId', contractId)
+        $('#see_details_modal').modal('show');
     },
 })
