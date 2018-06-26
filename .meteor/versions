@@ -45,6 +45,8 @@ less@2.7.12
 livedata@1.0.18
 lmieulet:meteor-coverage@1.1.4
 logging@1.1.20
+matb33:bootstrap-base@10.0.0
+matb33:bootstrap-glyphicons@10.0.0
 mdg:validated-method@1.1.0
 mdg:validation-error@0.5.1
 meteor@1.9.0

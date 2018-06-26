@@ -1,5 +1,6 @@
 import './see_details.html';
 import '../home/home.js';
+import '../../components/pre-loader/pre-loader.js';
 import { Contracts } from '../../../api/contracts/contracts';
 
 Template.see_details.onCreated(function () {

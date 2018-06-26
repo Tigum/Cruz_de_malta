@@ -1,4 +1,12 @@
 <template name="patios">
+    {{#if Template.subscriptionsReady}}
+    {{#if patios}}
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Patios Cadastrados</h1>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6 animated fadeIn">
@@ -24,5 +32,20 @@
         </div>
         <div class="col-3"></div>
     </div>
+    {{else}}
+        <div class="row logoPageMarginTop">
+            <div class="col-12 center-align">
+                <img src="/img/logo02.png" class="rounded mx-auto d-block logoPage" alt="Logo Cruz de Malta.">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4>Não há patios cadastrados até o momento</h4>
+            </div>
+        </div>
+    {{/if}}
     {{> add_patio}}
+    {{else}}
+        {{> pre_loader}}
+    {{/if}}
 </template>

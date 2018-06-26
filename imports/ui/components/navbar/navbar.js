@@ -25,7 +25,6 @@ Template.navbar.events({
         $('.contract_plate').val('')
         $('.contract_renavam').val('')
         $('.contract_chassis').val('')
-        $('.contract_patio').val('')
         Session.set('editContractMode', false)
         $('#add_contract_modal').modal('show');
     },

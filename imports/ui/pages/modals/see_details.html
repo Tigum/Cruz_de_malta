@@ -9,38 +9,56 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    {{#if Template.subscriptionsReady}}
                     <div class="row">
                         <div class="col-12">
-                            <ul>
-                                <li>
-                                    <h4 class="uppercase colorGreen">VALOR DO HONORÁRIO -> R${{contractValue}}</h4>
-                                </li>
-                                {{#each values}} 
-                                {{#if isDebit this.type}}
-                                <li>
-                                    <h4 class="uppercase colorRed">{{this.reason}} -> {{formatNegativePrice this.value}} ({{this.type}}) &nbsp;
-                                        <a class="linkConfig noUppercase removeValueFromContract"
-                                            data-value-id="{{this.id}}">Remover</a>
-                                    </h4>
-                                </li>
-                                {{else}}
-                                <li>
-                                    <h4 class="uppercase colorBlue">{{this.reason}} -> R${{this.value}} ({{this.type}}) &nbsp;
-                                        <a class="linkConfig noUppercase removeValueFromContract"
-                                            data-value-id="{{this.id}}">Remover</a>
-                                    </h4>
-                                </li>
-                                {{/if}} 
-                                {{/each}}
-                            </ul>
-                            <hr> 
-                            {{#if isProfit}}
+                            {{#if values}}
+                                <table class="table table-striped">
+                                    <thead class="thead-dark text-center">
+                                        <tr>
+                                            <th class="fontSizeDetails" scope="col">Descrição do valor</th>
+                                            <th class="fontSizeDetails" scope="col">Valor</th>
+                                            <th class="fontSizeDetails" scope="col">Débito/Crédito</th>
+                                            <th class="fontSizeDetails" scope="col">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {{#each values}}
+                                        <tr>
+                                            <td class="uppercase fontSizeDetails">{{this.reason}}</td>
+                                            <td class="fontSizeDetails">{{formatNegativePrice this.value}}</td>
+                                            <td class="fontSizeDetails">{{this.type}}</td>
+                                            <td>
+                                                <a class="linkConfig removeValueFromContract fontSizeDetails" data-value-id="{{this.id}}">Remover</a>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            {{else}}
+                            <div class="row">
+                                <div class="col-12 center-align">
+                                    <img src="/img/logo02.png" class="rounded mx-auto d-block navLogo" alt="Logo Cruz de Malta.">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h4>Não há valores adicionados a este contrato</h4>
+                                </div>
+                            </div>
+                            
+                            {{/if}}
+
+                            <hr> {{#if isProfit}}
                             <h3 class="uppercase colorGreen marginLeftDetails">Valor do lucro: R${{formatNegativePrice balance}}</h3>
                             {{else}}
                             <h3 class="uppercase colorRed marginLeftDetails">Valor do prejuízo: {{formatNegativePrice balance}}</h3>
                             {{/if}}
                         </div>
                     </div>
+                    {{else}}
+                        {{> pre_loader}}
+                    {{/if}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Voltar</button>

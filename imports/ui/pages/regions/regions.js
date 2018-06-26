@@ -1,5 +1,6 @@
 import './regions.html';
 import '../../pages/modals/add_region.js'
+import '../../components/pre-loader/pre-loader.js';
 import { Session } from "meteor/session";
 import { Regions } from '../../../api/regions/regions.js';
 

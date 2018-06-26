@@ -4,6 +4,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 // Import needed templates
 import '../../ui/pages/main/wrapper.js';
 import '../../ui/pages/home/home.js';
+import '../../ui/pages/contracts_arquived/contracts_arquived.js';
 import '../../ui/pages/regions/regions.js';
 import '../../ui/pages/patios/patios.js';
 
@@ -12,6 +13,13 @@ FlowRouter.route('/', {
   name: 'contracts',
   action() {
     BlazeLayout.render('wrapper',  { content: 'contracts' });
+  },
+});
+
+FlowRouter.route('/contracts_arquived', {
+  name: 'contracts_arquived',
+  action() {
+    BlazeLayout.render('wrapper',  { content: 'contracts_arquived' });
   },
 });
 

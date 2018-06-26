@@ -12,11 +12,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                {{#if Template.subscriptionsReady}}
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label model-item-text">Placa:</label>
-                            <input type="text" class="form-control contract_plate" id="recipient-name">
+                            <input type="text" class="form-control contract_plate uppercase" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="recipient-name2" class="col-form-label model-item-text">Renavam (opcional):</label>
@@ -26,16 +27,18 @@
                             <label for="recipient-name3" class="col-form-label model-item-text">Chassis:</label>
                             <input type="text" class="form-control contract_chassis" id="recipient-name3">
                         </div>
-                        <div class="form-group">
-                            <label for="recipient-name4" class="col-form-label model-item-text">Patio:</label>
-                            <input type="text" class="form-control contract_patio" id="recipient-name4">
-                        </div>
-                        <!-- <div class="form-group">
-                            <label for="recipient-name5" class="col-form-label model-item-text">Valor adicional (em R$):</label>
-                            <input type="number" class="form-control contract_value" id="recipient-name5">
-                        </div> -->
                         <br>
-                        {{#unless editMode}}
+                        <div class="form-group">
+                            <select class="custom-select custom-select-lg mb-3 contract_patio uppercase">
+                                <option value="0" selected>Selecione o pátio</option>
+                                {{#if Template.subscriptionsReady}}
+                                    {{#each patios}}
+                                        <option class="uppercase" value="{{this.name}}">{{this.name}}</option>
+                                    {{/each}}
+                                {{/if}}
+                            </select>
+                        </div>
+                        <br>
                         <div class="form-group">
                             <select class="custom-select custom-select-lg mb-3 contract_region uppercase">
                                 <option value="0" selected>Selecione a região</option>
@@ -46,12 +49,15 @@
                                 {{/if}}
                             </select>
                         </div>
-                        {{/unless}}
                     </form>
                 </div>
+                {{else}}
+                    {{> pre_loader}}
+                {{/if}}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
                     {{#if editMode}}
+                    <button type="button" class="btn btn-primary buttonModalDelete" data-dismiss="modal">Deletar contrato</button>
                     <button type="button" class="btn btn-primary buttonModalEdit">Salvar</button>
                     {{else}}
                     <button type="button" class="btn btn-primary buttonModalSave">Adicionar contrato</button>

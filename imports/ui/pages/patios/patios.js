@@ -1,5 +1,6 @@
 import './patios.html';
 import '../../pages/modals/add_patio.js'
+import '../../components/pre-loader/pre-loader.js';
 import { Session } from "meteor/session";
 import { Patios } from '../../../api/patios/patios.js';
 

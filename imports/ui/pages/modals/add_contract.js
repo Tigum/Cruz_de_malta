@@ -2,11 +2,14 @@ import { Session } from "meteor/session";
 import './add_contract.html';
 import '../../components/navbar/navbar.js';
 import '../../pages/home/home.js';
+import '../../components/pre-loader/pre-loader.js';
 import { Regions } from '../../../api/regions/regions.js';
+import { Patios } from "../../../api/patios/patios";
 
 Template.add_contract.onCreated(function () {
     this.autorun(() => {
         this.subscribe('regions')
+        this.subscribe('patios')
     })    
 })
 
@@ -16,6 +19,7 @@ Template.add_contract.onDestroyed(function () {
 
 Template.add_contract.helpers({
     regions: () => Regions.find() ? Regions.find({}, {sort: {name: 1}}).fetch() : [],
+    patios: () => Patios.find() ? Patios.find({}, {sort: {name: 1}}).fetch() : [],
     editMode: () => Session.get('editContractMode') ? Session.get('editContractMode') : false,
 });
 
@@ -37,12 +41,13 @@ Template.add_contract.events({
         }
 
         const doc = {
-            plate: $('.contract_plate').val(),
+            plate: $('.contract_plate').val().toUpperCase(),
             renavam: $('.contract_renavam').val(),
             chassis: $('.contract_chassis').val(),
             patio: $('.contract_patio').val(),
             value: $('.contract_value').val() ? parseFloat($('.contract_value').val()).toFixed(2) : 0,
-            region: region
+            region: region,
+            status: 'new'
         }
         Meteor.call('contracts.insert', doc)
         alert('Novo contrato adicionado com sucesso!')
@@ -58,7 +63,7 @@ Template.add_contract.events({
         
         const doc = {
             id: Session.get('contractId'),
-            plate: $('.contract_plate').val(),
+            plate: $('.contract_plate').val().toUpperCase(),
             renavam: $('.contract_renavam').val(),
             chassis: $('.contract_chassis').val(),
             patio: $('.contract_patio').val(),
@@ -69,7 +74,13 @@ Template.add_contract.events({
         $('#add_contract_modal').modal('toggle');
         Session.set('editContractMode', false)
         clearAddContractForm()
-    }
+    },
+    'click .buttonModalDelete'(event, template) {
+        event.preventDefault();
+        const result = window.confirm('Tem certeza que deseja deletar esse contrato permanentemente?');
+        if (!result) return;
+        Meteor.call('contracts.delete', Session.get('contractId'))
+    },
 })
 
 function clearAddContractForm() {

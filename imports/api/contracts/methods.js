@@ -29,4 +29,10 @@ Meteor.methods({
     'contracts.addbalance'(contractId, balance, profitable) {
         return Contracts.update({ _id: contractId }, {$set:{balance: balance, profitable: profitable}});
     },
+    'contracts.arquive'(contractId) {
+        return Contracts.update({ _id: contractId }, {$set:{status: 'done'}});
+    },
+    'contracts.reopen'(contractId) {
+        return Contracts.update({ _id: contractId }, {$set:{status: 'new'}});
+    },
 });

@@ -1,48 +1,68 @@
 <template name="contracts">
     {{#if Template.subscriptionsReady}}
-    <table class="table table-striped animated fadeIn">
-        <thead class="thead-dark text-center">
-            <tr>
-                <th scope="col">Placa</th>
-                <th scope="col">Adicionado em</th>
-                <th scope="col">Renavam</th>
-                <th scope="col">Chassis</th>
-                <th scope="col">Pátio</th>
-                <th scope="col">Região</th>
-                <th scope="col">Resumo financeiro</th>
-                <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            {{#each contract in contracts}} {{> contract_item content=contract}} {{/each}}
-        </tbody>
-    </table>
+        {{#if contracts}}
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contratos Ativos</h1>
+        <table class="table table-striped animated fadeIn">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Adicionado em</th>
+                    <th scope="col">Renavam</th>
+                    <th scope="col">Chassis</th>
+                    <th scope="col">Pátio</th>
+                    <th scope="col">Região</th>
+                    <th scope="col">Resumo financeiro</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {{#each contract in contracts}} {{> contract_item content=contract}} {{/each}}
+            </tbody>
+        </table>
+        {{> add_value}}
+        {{> add_reason}}
+        {{> see_details}}
+
+        {{else}}
+        <div class="row logoPageMarginTop">
+            <div class="col-12 center-align">
+                <img src="/img/logo02.png" class="rounded mx-auto d-block logoPage" alt="Logo Cruz de Malta.">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4>Não há contratos ativos até o momento</h4>
+            </div>
+        </div>
+        {{/if}}
+        
+    {{else}}
+        {{> pre_loader}}
     {{/if}}
-    {{> add_value}}
-    {{> add_reason}}
-    {{> see_details}}
 </template>
 
 <template name="contract_item">
     {{#if Template.subscriptionsReady}}
-    <tr>
-        <td>{{content.plate}}</td>
-        <td>{{formatDate content.createdAt}}</td>
-        <td>{{content.renavam}}</td>
-        <td>{{content.chassis}}</td>
-        <td>{{content.patio}}</td>
-        <td class="uppercase">{{content.region.name}} - {{formatPrice content.region.price}}</td>
-        {{#if content.profitable}}
-        <td class="contractBalance alert alert-success">Lucro de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
-        {{else}}
-        <td class="contractBalance alert alert-danger">Prejuízo de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
-        {{/if}}
-        <td>
-            <a class="linkConfig addValueToContract" data-contract-id={{content._id}}>Adicionar valor</a> &nbsp; &nbsp;
-            <a class="linkConfig editContract" data-contract-id={{content._id}}>Editar</a> &nbsp; &nbsp;
-            <a class="linkConfig deleteContract" data-contract-id={{content._id}}>Deletar</a>
-        </td>
-    </tr>
+        <tr>
+            <td class="uppercase">{{content.plate}}</td>
+            <td>{{formatDate content.createdAt}}</td>
+            <td>{{content.renavam}}</td>
+            <td>{{content.chassis}}</td>
+            <td class="uppercase">{{content.patio}}</td>
+            <td class="uppercase">{{content.region.name}} - {{formatPrice content.region.price}}</td>
+            {{#if content.profitable}}
+            <td class="contractBalance alert alert-success">Lucro de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
+            {{else}}
+            <td class="contractBalance alert alert-danger">Prejuízo de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
+            {{/if}}
+            <td>
+                <a class="linkConfig addValueToContract" data-contract-id={{content._id}}>Adicionar valor</a> &nbsp; &nbsp;
+                <a class="linkConfig editContract" data-contract-id={{content._id}}>Editar</a> &nbsp; &nbsp;
+                <a class="linkConfig arquiveContract" data-contract-id={{content._id}}>Arquivar</a>
+            </td>
+        </tr>
+        {{> add_contract}}
+    {{else}}
+        {{> pre_loader}}
     {{/if}}
-    {{> add_contract}}
 </template>

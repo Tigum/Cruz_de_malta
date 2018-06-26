@@ -1,4 +1,4 @@
-import './home.html';
+import './contracts_arquived.html';
 import '../modals/add_contract.js';
 import '../modals/add_value.js';
 import '../modals/add_reason.js';
@@ -8,17 +8,17 @@ import { Contracts } from '../../../api/contracts/contracts';
 import { Regions } from '../../../api/regions/regions';
 
 
-Template.contracts.onCreated(function () {
+Template.contracts_arquived.onCreated(function () {
     this.autorun(() => {
-        this.subscribe('contracts')
+        this.subscribe('contracts.done')
     })    
 })
 
-Template.contracts.helpers({
-    contracts: () => Contracts.find() ? Contracts.find({status:'new'}, {sort:{createdAt:-1}}).fetch() : [],
+Template.contracts_arquived.helpers({
+    contracts: () => Contracts.find() ? Contracts.find({status:'done'}, {sort:{createdAt:-1}}).fetch() : [],
 });
 
-Template.contract_item.helpers({
+Template.contract_item_arquived.helpers({
     regionName(regionId) {
         return Regions.findOne({_id: regionId}) ? Regions.findOne({_id: regionId}).name : []
     },
@@ -61,7 +61,7 @@ Template.contract_item.helpers({
     }
 });
 
-Template.contract_item.events({
+Template.contract_item_arquived.events({
     'click .editContract'(event, template) {
         event.preventDefault();
         Session.set('editContractMode', true)
@@ -77,17 +77,17 @@ Template.contract_item.events({
         $('.contract_region').val(doc.region.name)
         $('#add_contract_modal').modal('show');
     },
-    'click .addValueToContract'(event, template) {
-        event.preventDefault();
-        $( ".debitSelected" ).prop( "checked", false );
-        $( ".creditSelected" ).prop( "checked", false );
-        Session.set('typeOfValueSelected', '')
-        const clickedItem = $(event.currentTarget);
-        const contractId = clickedItem.attr('data-contract-id')
-        Session.set('contractId', contractId)
-        const doc = Contracts.findOne({_id: contractId})
-        $('#add_value_modal').modal('show');
-    },
+    // 'click .addValueToContract'(event, template) {
+    //     event.preventDefault();
+    //     $( ".debitSelected" ).prop( "checked", false );
+    //     $( ".creditSelected" ).prop( "checked", false );
+    //     Session.set('typeOfValueSelected', '')
+    //     const clickedItem = $(event.currentTarget);
+    //     const contractId = clickedItem.attr('data-contract-id')
+    //     Session.set('contractId', contractId)
+    //     const doc = Contracts.findOne({_id: contractId})
+    //     $('#add_value_modal').modal('show');
+    // },
     'click .seeContractDetails'(event, template) {
         event.preventDefault();
         const clickedItem = $(event.currentTarget);
@@ -95,13 +95,13 @@ Template.contract_item.events({
         Session.set('contractId', contractId)
         $('#see_details_modal').modal('show');
     },
-    'click .arquiveContract'(event, template) {
+    'click .reOpenContract'(event, template) {
         event.preventDefault();
         const result = window.confirm('Tem certeza que deseja arquivar esse contrato?');
         if (!result) return;
         const clickedItem = $(event.currentTarget);
         const contractId = clickedItem.attr('data-contract-id')
         Session.set('contractId', contractId)
-        Meteor.call('contracts.arquive', contractId)
+        Meteor.call('contracts.reopen', contractId)
     },
 })
