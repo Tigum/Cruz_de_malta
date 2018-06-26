@@ -21,7 +21,7 @@ Template.regions.events({
         const doc = Regions.findOne({_id: regionId})
         $('.region-input').val(doc.name)
         $('.region_price').val(doc.price)
-        $('#add_region_modal').modal('show');
+        $('#add_region_modal').modal('show'); 
     },
     'click .deleteRegion'(event, template) {
         event.preventDefault();
