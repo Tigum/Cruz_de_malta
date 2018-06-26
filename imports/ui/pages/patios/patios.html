@@ -1,0 +1,28 @@
+<template name="patios">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 animated fadeIn">
+            <table class="table table-striped">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th scope="col">Nome do patio</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {{#each patios}}
+                    <tr>
+                        <td class="uppercase">{{this.name}}</td>
+                        <td>
+                            <a class="linkConfig editPatio" data-patio-id={{this._id}}>Editar</a> &nbsp; &nbsp;
+                            <a class="linkConfig deletePatio" data-patio-id={{this._id}}>Deletar</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    {{> add_patio}}
+</template>

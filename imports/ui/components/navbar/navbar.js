@@ -2,10 +2,17 @@
 import './navbar.html';
 import '../../pages/modals/add_region.js'
 import '../../pages/modals/add_contract.js'
+import '../../pages/modals/add_patio.js'
 import { Session } from "meteor/session";
 
 
 Template.navbar.events({
+    'click .add_patio'(event, template) {
+        event.preventDefault();
+        Session.set('patioEdit', false)
+        $('.patio-input').val('')
+        $('#add_patio_modal').modal('show');
+    },
     'click .add_region'(event, template) {
         event.preventDefault();
         $('.region-input').val('')

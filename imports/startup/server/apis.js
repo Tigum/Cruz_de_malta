@@ -7,3 +7,5 @@ import '../../api/contracts/methods.js';
 import '../../api/contracts/server/publications.js';
 import '../../api/reasons/methods.js';
 import '../../api/reasons/server/publications.js';
+import '../../api/patios/methods.js';
+import '../../api/patios/server/publications.js';
