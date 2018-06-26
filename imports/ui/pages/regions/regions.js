@@ -23,7 +23,6 @@ Template.regions.events({
         $('.region_price').val(doc.price)
         $('#add_region_modal').modal('show'); 
     },
-    
     'click .deleteRegion'(event, template) {
         event.preventDefault();
         const clickedItem = $(event.currentTarget);
