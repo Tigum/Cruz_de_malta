@@ -27,7 +27,7 @@ Template.add_contract.helpers({
 Template.add_contract.events({
     'click .buttonModalSave'(event, template) {
         if(!$('.contract_plate').val()) return alert('Favor inserir placa')
-        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir chassis')
+        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir região para honorário')
         if(!$('.contract_patio').val() || $('.contract_patio').val() == 'not_selected') return alert('Favor inserir patio')
         if(!$('.contract_renavam').val()) return alert('Favor inserir o renavam')
         
@@ -44,7 +44,7 @@ Template.add_contract.events({
         const doc = {
             plate: $('.contract_plate').val().toUpperCase(),
             renavam: $('.contract_renavam').val(),
-            chassis: $('.contract_chassis').val(),
+            chassis: $('.contract_chassis').val() ? $('.contract_chassis').val() : 'Chassis não informado',
             patio: $('.contract_patio').val(),
             value: $('.contract_value').val() ? parseFloat($('.contract_value').val()).toFixed(2) : 0,
             region: region,
@@ -59,7 +59,7 @@ Template.add_contract.events({
     },
     'click .buttonModalEdit'(event, template) {
         if(!$('.contract_plate').val()) return alert('Favor inserir placa')
-        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir chassis')
+        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir região para honorário')
         if(!$('.contract_patio').val() || $('.contract_patio').val() == 'not_selected') return alert('Favor inserir patio')
         if(!$('.contract_renavam').val()) return alert('Favor inserir o renavam')
         
@@ -67,7 +67,7 @@ Template.add_contract.events({
             id: Session.get('contractId'),
             plate: $('.contract_plate').val().toUpperCase(),
             renavam: $('.contract_renavam').val(),
-            chassis: $('.contract_chassis').val(),
+            chassis: $('.contract_chassis').val() ? $('.contract_chassis').val() : 'Chassis não informado',
             patio: $('.contract_patio').val(),
             value: $('.contract_value').val() ? parseFloat($('.contract_value').val()).toFixed(2) : 0,
         }
