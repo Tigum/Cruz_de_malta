@@ -49,7 +49,8 @@ Template.add_contract.events({
             value: $('.contract_value').val() ? parseFloat($('.contract_value').val()).toFixed(2) : 0,
             region: region,
             status: 'new',
-            date: moment(new Date()).format('DD/MM/YYYY')
+            date: moment(new Date()).format('DD/MM/YYYY'),
+            month: moment(new Date()).format('MM/YYYY')
         }
         Meteor.call('contracts.insert', doc)
         alert('Novo contrato adicionado com sucesso!')

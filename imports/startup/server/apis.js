@@ -9,3 +9,5 @@ import '../../api/reasons/methods.js';
 import '../../api/reasons/server/publications.js';
 import '../../api/patios/methods.js';
 import '../../api/patios/server/publications.js';
+import '../../api/reports/methods.js';
+import '../../api/reports/server/publications.js';
