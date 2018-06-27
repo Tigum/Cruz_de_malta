@@ -5,6 +5,10 @@ Meteor.publish('contracts', function () {
     return Contracts.find({status: 'new'})
 })
 
+Meteor.publish('contracts.all', function () {
+    return Contracts.find()
+})
+
 Meteor.publish('contracts.done', function () {
     return Contracts.find({status: 'done'})
 })

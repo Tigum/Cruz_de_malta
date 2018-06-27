@@ -49,6 +49,10 @@ Template.navbar.events({
     },
     'click .generate_report'(event, template) {
         event.preventDefault();
+        Session.set('checked', true)
+        Session.set('allPatiosSelected', false)
+        Session.set('selectedPatios', [])
+        $(".custom-control-input").prop('checked', false)
         $('#add_report_modal').modal('show');
     },
 })

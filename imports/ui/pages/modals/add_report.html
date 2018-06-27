@@ -11,12 +11,72 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label model-item-text">Nome da região:</label>
-                            <input type="text" class="form-control region-input" id="recipient-name">
+                            <label for="recipient-name" class="col-form-label model-item-text">Selecione o período abaixo*:</label>
+                            <select class="custom-select custom-select-lg mb-3 month_selected uppercase" for="recipient-name">
+                                <option value="not_selected" selected>Selecione o mês</option>
+                                <option class="uppercase" value="01">Janeiro</option>
+                                <option class="uppercase" value="02">Fevereiro</option>
+                                <option class="uppercase" value="03">Março</option>
+                                <option class="uppercase" value="04">Abril</option>
+                                <option class="uppercase" value="05">Maio</option>
+                                <option class="uppercase" value="06">Junho</option>
+                                <option class="uppercase" value="07">Julho</option>
+                                <option class="uppercase" value="08">Agosto</option>
+                                <option class="uppercase" value="09">Setembro</option>
+                                <option class="uppercase" value="10">Outubro</option>
+                                <option class="uppercase" value="11">Novembro</option>
+                                <option class="uppercase" value="12">Dezembro</option>
+                            </select>
+                            <select class="custom-select custom-select-lg mb-3 year_selected uppercase" for="recipient-name">
+                                <option value="not_selected" selected>Selecione o ano</option>
+                                <option class="uppercase" value="2018">2018</option>
+                                <option class="uppercase" value="2019">2019</option>
+                                <option class="uppercase" value="2020">2020</option>
+                                <option class="uppercase" value="2021">2021</option>
+                                <option class="uppercase" value="2022">2022</option>
+                                <option class="uppercase" value="2023">2023</option>
+                                <option class="uppercase" value="2024">2024</option>
+                                <option class="uppercase" value="2025">2025</option>
+                                <option class="uppercase" value="2026">2026</option>
+                                <option class="uppercase" value="2027">2027</option>
+                                <option class="uppercase" value="2028">2028</option>
+                                <option class="uppercase" value="2029">2029</option>
+                                <option class="uppercase" value="2030">2030</option>
+                                <option class="uppercase" value="2031">2031</option>
+                                <option class="uppercase" value="2032">2032</option>
+                                <option class="uppercase" value="2033">2033</option>
+                                <option class="uppercase" value="2034">2034</option>
+                                <option class="uppercase" value="2035">2035</option>
+                                <option class="uppercase" value="2036">2036</option>
+                                <option class="uppercase" value="2037">2037</option>
+                                <option class="uppercase" value="2038">2038</option>
+                                <option class="uppercase" value="2039">2039</option>
+                                <option class="uppercase" value="2040">2040</option>
+                            </select>
                         </div>
+                        <hr>
+
+                        <label class="col-form-label model-item-text">Selecione o patio*:</label><br>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="allPatios" value="allPatios" data-patio-all="allSelected">
+                            <label class="custom-control-label checkBoxConfig uppercase" for="allPatios">Todos patios</label><br>
+                        </div>
+                        {{#each patios}}
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="{{this._id}}" value="{{this.name}}" data-patio="{{this._id}}">
+                            <label class="custom-control-label checkBoxConfig uppercase" for="{{this._id}}">{{this.name}}</label><br>
+                        </div>
+                        {{/each}}
+
+                        <hr>
                         <div class="form-group">
-                            <label for="recipient-name2" class="col-form-label model-item-text">Valor em reais (R$):</label>
-                            <input type="number" class="form-control region_price" id="recipient-name2">
+                            <label for="recipient-name3" class="col-form-label model-item-text">Selecione o tipo de contrato*:</label>
+                            <select class="custom-select custom-select-lg mb-3 contracts_selected uppercase" for="recipient-name3">
+                                <option value="not_selected" selected>Tipos de contratos</option>
+                                <option class="uppercase" value="new">Contratos ativos</option>
+                                <option class="uppercase" value="done">Contratos arquivados</option>
+                                <option class="uppercase" value="all">Todos contratos</option>
+                            </select>
                         </div>
                     </form>
                 </div>
