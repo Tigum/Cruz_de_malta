@@ -1,0 +1,30 @@
+<template name="add_report">
+    <div class="modal fade" id="add_report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_region_modal_Label">Gerar relatório</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label model-item-text">Nome da região:</label>
+                            <input type="text" class="form-control region-input" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name2" class="col-form-label model-item-text">Valor em reais (R$):</label>
+                            <input type="number" class="form-control region_price" id="recipient-name2">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary buttonModalSave">Gerar relatório</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

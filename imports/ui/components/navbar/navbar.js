@@ -3,6 +3,7 @@ import './navbar.html';
 import '../../pages/modals/add_region.js'
 import '../../pages/modals/add_contract.js'
 import '../../pages/modals/add_patio.js'
+import '../../pages/modals/add_report.js'
 import '../../pages/modals/reasons.js'
 import { Session } from "meteor/session";
 
@@ -45,5 +46,9 @@ Template.navbar.events({
         event.preventDefault();
         Session.set('reasonsEditIsDebit', false)
         $('#reasons_modal').modal('show');
+    },
+    'click .generate_report'(event, template) {
+        event.preventDefault();
+        $('#add_report_modal').modal('show');
     },
 })
