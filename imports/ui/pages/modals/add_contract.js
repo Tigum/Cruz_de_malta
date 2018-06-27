@@ -5,6 +5,7 @@ import '../../pages/home/home.js';
 import '../../components/pre-loader/pre-loader.js';
 import { Regions } from '../../../api/regions/regions.js';
 import { Patios } from "../../../api/patios/patios";
+import moment from "moment";
 
 Template.add_contract.onCreated(function () {
     this.autorun(() => {
@@ -47,7 +48,8 @@ Template.add_contract.events({
             patio: $('.contract_patio').val(),
             value: $('.contract_value').val() ? parseFloat($('.contract_value').val()).toFixed(2) : 0,
             region: region,
-            status: 'new'
+            status: 'new',
+            date: moment(new Date()).format('DD/MM/YYYY')
         }
         Meteor.call('contracts.insert', doc)
         alert('Novo contrato adicionado com sucesso!')

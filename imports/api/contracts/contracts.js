@@ -23,6 +23,10 @@ Contracts.schema = new SimpleSchema({
     type: Date,
     optional: true,
   },
+  date: {
+    type: String,
+    optional: true,
+  },
   chassis: {
     type: String,
     optional: true,
@@ -96,6 +100,7 @@ Contracts.publicFields = {
     plate: 1,
     renavam: 1,
     createdAt: 1,
+    date: 1,
     chassis: 1,
     patio: 1,
     region: 1,

@@ -5,6 +5,10 @@ import '../../pages/modals/add_contract.js'
 import '../../pages/modals/add_patio.js'
 import { Session } from "meteor/session";
 
+Template.navbar.onCreated(function () {
+    $('.search').val('')
+    Session.set('search', '');
+})
 
 Template.navbar.events({
     'click .add_patio'(event, template) {
@@ -27,5 +31,8 @@ Template.navbar.events({
         $('.contract_chassis').val('')
         Session.set('editContractMode', false)
         $('#add_contract_modal').modal('show');
+    },
+    'keyup .search': (event, template) => {
+        Session.set('search', $('.search').val());
     },
 })

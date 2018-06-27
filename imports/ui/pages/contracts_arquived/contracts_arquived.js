@@ -4,18 +4,47 @@ import '../modals/add_value.js';
 import '../modals/add_reason.js';
 import '../modals/see_details.js';
 import '../../components/pre-loader/pre-loader.js';
+import '../../components/navbar/navbar.js';
 import { Contracts } from '../../../api/contracts/contracts';
 import { Regions } from '../../../api/regions/regions';
 
 
 Template.contracts_arquived.onCreated(function () {
+    Session.get('search', '')
     this.autorun(() => {
         this.subscribe('contracts.done')
     })    
 })
 
 Template.contracts_arquived.helpers({
-    contracts: () => Contracts.find() ? Contracts.find({status:'done'}, {sort:{createdAt:-1}}).fetch() : [],
+    contracts() {
+        let filter = Session.get('search') ? Session.get('search') : ''
+        let selector = { status: 'done' };
+        let options = { sort: { createdAt: -1 } }
+
+        if (filter.length > 0) {
+            let regexOptions = {
+                $regex: filter,
+                $options: 'i',
+            };
+            selector['$or'] = [{
+                region: regexOptions,
+            }, {
+                plate: regexOptions,
+            }, {
+                renavam: regexOptions,
+            }, {
+                chassis: regexOptions,
+            }, {
+                date: regexOptions,
+            }, {
+                patio: regexOptions,
+            }];
+            return Contracts.find(selector, options) ? Contracts.find(selector, options).fetch() : []
+        } else {
+            return Contracts.find(selector, options) ? Contracts.find(selector, options).fetch() : []
+        }
+    },
 });
 
 Template.contract_item_arquived.helpers({
