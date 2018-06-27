@@ -27,8 +27,8 @@ Template.add_contract.helpers({
 Template.add_contract.events({
     'click .buttonModalSave'(event, template) {
         if(!$('.contract_plate').val()) return alert('Favor inserir placa')
-        if(!$('.contract_chassis').val()) return alert('Favor inserir chassis')
-        if(!$('.contract_patio').val()) return alert('Favor inserir patio')
+        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir chassis')
+        if(!$('.contract_patio').val() || $('.contract_patio').val() == 'not_selected') return alert('Favor inserir patio')
         if(!$('.contract_renavam').val()) return alert('Favor inserir o renavam')
         
         const selectedRegion = Regions.findOne({name: $('.contract_region').val()}) ? Regions.findOne({name: $('.contract_region').val()}) : {}
@@ -59,8 +59,8 @@ Template.add_contract.events({
     },
     'click .buttonModalEdit'(event, template) {
         if(!$('.contract_plate').val()) return alert('Favor inserir placa')
-        if(!$('.contract_chassis').val()) return alert('Favor inserir chassis')
-        if(!$('.contract_patio').val()) return alert('Favor inserir patio')
+        if(!$('.contract_region').val() || $('.contract_region').val() == 'not_selected') return alert('Favor inserir chassis')
+        if(!$('.contract_patio').val() || $('.contract_patio').val() == 'not_selected') return alert('Favor inserir patio')
         if(!$('.contract_renavam').val()) return alert('Favor inserir o renavam')
         
         const doc = {

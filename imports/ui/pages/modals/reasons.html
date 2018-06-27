@@ -1,0 +1,66 @@
+<template name="reasons">
+    <div class="modal fade" id="reasons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{#if isDebit}}
+                    <h5 class="modal-title" id="add_region_modal_Label">Editar razões para débito</h5>
+                    {{else}}
+                    <h5 class="modal-title" id="add_region_modal_Label">Editar razões para crédito</h5>
+                    {{/if}}
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{#if Template.subscriptionsReady}}
+                    <div class="row">
+                        <div class="col-12">
+                            {{#if reasons}}
+                            <table class="table table-striped">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th class="fontSizeDetails" scope="col">Descrição da razão</th>
+                                        <th class="fontSizeDetails" scope="col">Débito/Crédito</th>
+                                        <th class="fontSizeDetails" scope="col">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    {{#each reasons}}
+                                    <tr>
+                                        <td class="uppercase fontSizeDetails">{{this.name}}</td>
+                                        <td class="uppercase fontSizeDetails">{{this.type}}</td>
+                                        <td>
+                                            <a class="linkConfig removeReason fontSizeDetails" data-reason-id="{{this._id}}">Remover</a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            {{else}}
+                            <div class="row">
+                                <div class="col-12 center-align">
+                                    <img src="/img/logo02.png" class="rounded mx-auto d-block navLogo" alt="Logo Cruz de Malta.">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h4>Não há razões adicionadas</h4>
+                                </div>
+                            </div>
+
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{else}} 
+                        {{> pre_loader}} 
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary buttonModalSave">Adicionar</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

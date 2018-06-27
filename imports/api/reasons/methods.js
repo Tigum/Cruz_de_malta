@@ -8,7 +8,7 @@ Meteor.methods({
   'reasons.edit'(doc) {
     return Reasons.update({_id: doc.id}, {$set: {name: doc.name}});
   },
-  'reasons.delete'(debitId) {
-    return Reasons.remove({_id: debitId});
+  'reasons.delete'(reasonId) {
+    return Reasons.remove({_id: reasonId});
   },
 });
