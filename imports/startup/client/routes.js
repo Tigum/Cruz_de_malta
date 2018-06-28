@@ -7,6 +7,7 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/contracts_arquived/contracts_arquived.js';
 import '../../ui/pages/regions/regions.js';
 import '../../ui/pages/patios/patios.js';
+import '../../ui/pages/reports/reports.js';
 
 // Set up all routes in the app
 FlowRouter.route('/', {
@@ -20,6 +21,13 @@ FlowRouter.route('/contracts_arquived', {
   name: 'contracts_arquived',
   action() {
     BlazeLayout.render('wrapper',  { content: 'contracts_arquived' });
+  },
+});
+
+FlowRouter.route('/reports', {
+  name: 'reports',
+  action() {
+    BlazeLayout.render('wrapper',  { content: 'reports' });
   },
 });
 

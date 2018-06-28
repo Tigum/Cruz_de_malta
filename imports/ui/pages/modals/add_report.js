@@ -42,11 +42,11 @@ Template.add_report.events({
         const contractStatus = $('.contracts_selected').val() ? $('.contracts_selected').val() : ''
 
         if (patios[0] == 'allPatios' && contractStatus == 'all') {
-            reportContractStatus ='Todos contratos'
+            reportContractStatus = 'Todos contratos'
             contracts = Contracts.find({ month: month + '/' + year }).fetch()
         }
 
-        if (patios[0] == 'allPatios' &&  contractStatus != 'all') {
+        if (patios[0] == 'allPatios' && contractStatus != 'all') {
             patiosNames = ['Todos patios']
 
             contracts = Contracts.find({ month: month + '/' + year, status: contractStatus }).fetch()
@@ -60,15 +60,19 @@ Template.add_report.events({
 
         if (contractStatus == 'all' && patios[0] != 'allPatios') {
             reportContractStatus = 'Todos contratos'
-            contracts = Contracts.find({ month: month + '/' + year, patio: { $in: patios } }).fetch()
+            contracts = Contracts.find({ month: month + '/' + year, patio: { $in: patiosNames } }).fetch()
         }
 
         if (patios[0] != 'allPatios' && contractStatus != 'all') {
-            contracts = Contracts.find({ month: month + '/' + year, status: contractStatus, patio: { $in: patios } }).fetch()
+            contracts = Contracts.find({ month: month + '/' + year, status: contractStatus, patio: { $in: patiosNames } }).fetch()
         }
 
-        if (contractStatus == 'new') reportContractStatus = 'Contratos ativos'
-        if (contractStatus == 'done') reportContractStatus = 'Contratos arquivados'
+        if (contractStatus == 'new') {
+            reportContractStatus = 'Contratos ativos'
+        }
+        if (contractStatus == 'done') {
+            reportContractStatus = 'Contratos arquivados'
+        }
 
         const doc = {
             period: month + '/' + year,
@@ -79,6 +83,8 @@ Template.add_report.events({
             contracts: contracts
         }
         Meteor.call('reports.insert', doc)
+        alert('Relatório gerado')
+        $('#add_report_modal').modal('toggle');
 
     },
     'click .custom-control-input'(event, template) {

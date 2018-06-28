@@ -1,0 +1,59 @@
+<template name="reports">
+        {{#if Template.subscriptionsReady}}
+            {{#if reports}}
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Relatórios</h1>
+            <table class="table table-striped animated fadeIn">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Data de criação</th>
+                        <th scope="col">Contratos</th>
+                        <th scope="col">Quantidade contratos</th>
+                        <th scope="col">Mês/Ano</th>
+                        <th scope="col">Patios</th>
+                        <th scope="col">Balanço</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {{#each report in reports}} {{> report_item content=report}} {{/each}}
+                </tbody>
+            </table>
+            
+            {{else}}
+            <div class="row logoPageMarginTop">
+                <div class="col-12 center-align">
+                    <img src="/img/logo02.png" class="rounded mx-auto d-block logoPage" alt="Logo Cruz de Malta.">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4>Não há relatórios gerados</h4>
+                </div>
+            </div>
+            {{/if}}
+            
+        {{else}}
+            {{> pre_loader}}
+        {{/if}}
+    </template>
+    
+    <template name="report_item">
+        {{#if Template.subscriptionsReady}}
+            <tr>
+                <td class="uppercase">{{cutString content._id}}</td>
+                <td>{{content.date}}</td>
+                <td>{{content.contractStatus}}</td>
+                <td>{{countContracts content.contracts}}</td>
+                <td class="uppercase">{{content.period}}</td>
+                <td class="uppercase">{{#if content.patios}}{{content.patios}}{{else}}TODOS PATIOS{{/if}}</td>
+                <td class="uppercase">balanço</td>
+                <td>
+                    <a class="linkConfig seeContracts" data-report-id={{content._id}}>Ver contratos</a> &nbsp; &nbsp;
+                    <a class="linkConfig deleteReport" data-report-id={{content._id}}>Deletar</a> &nbsp; &nbsp;
+                </td>
+            </tr>
+        {{else}}
+            {{> pre_loader}}
+        {{/if}}
+    </template>

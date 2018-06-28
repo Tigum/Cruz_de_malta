@@ -13,3 +13,11 @@ Template.registerHelper("formatNegativePrice", function formatNegativePrice(pric
 Template.registerHelper("formatDate", function formatDate(date) {
     return date ? moment(date).format('DD/MM/YYYY') : 'Date formatting not working';
 });
+
+Template.registerHelper("cutString", function cutString(string) {
+    return string ? string.substring(0,5) : 'Cut string not working';
+});
+
+Template.registerHelper("countContracts", function countContracts(contractsArray) {
+    return contractsArray ? contractsArray.length + ' contratos' : 'Contract count not working';
+});
