@@ -5,11 +5,15 @@ import '../../pages/modals/add_contract.js'
 import '../../pages/modals/add_patio.js'
 import '../../pages/modals/add_report.js'
 import '../../pages/modals/reasons.js'
+import '../../pages/modals/new_user.js'
 import { Session } from "meteor/session";
 
 Template.navbar.onCreated(function () {
     $('.search').val('')
     Session.set('search', '');
+    this.autorun(() => {
+        this.subscribe('user', Meteor.userId())
+    })
 })
 
 Template.navbar.events({
@@ -54,5 +58,17 @@ Template.navbar.events({
         Session.set('selectedPatios', [])
         $(".custom-control-input").prop('checked', false)
         $('#add_report_modal').modal('show');
+    },
+    'click .logoff'(event, template) {
+        event.preventDefault();
+        const result = window.confirm('Você tem certeza que desejar deslogar?');
+        if (!result) return;
+        Meteor.logout();
+        FlowRouter.go('/login')
+    },
+    'click .create_user'(event, template) {
+        event.preventDefault();
+        console.log('entrou')
+        $('#new_user_modal').modal('show');
     },
 })

@@ -11,3 +11,6 @@ import '../../api/patios/methods.js';
 import '../../api/patios/server/publications.js';
 import '../../api/reports/methods.js';
 import '../../api/reports/server/publications.js';
+import '../../api/users/server/publications.js';
+import '../../api/users/server/users.js';
+import '../../api/users/methods.js';

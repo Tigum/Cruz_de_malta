@@ -7,6 +7,7 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.0.0-beta.51",
+        "bcrypt": "^2.0.1",
         "bootstrap": "^4.1.1",
         "bootstrap-less": "^3.3.8",
         "jquery": "^3.3.1",
