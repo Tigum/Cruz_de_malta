@@ -36,5 +36,24 @@ Template.reports.helpers({
         } else {
             return Reports.find(selector, options) ? Reports.find(selector, options).fetch() : []
         }
-    },
+    }
 });
+
+Template.report_item.helpers({
+    isProfitable(reportId) {
+        if(!Reports.findOne({ _id: reportId })) return
+        if(!Reports.findOne({ _id: reportId }).balance) return
+        return Reports.findOne({ _id: reportId }).balance > 0 ? true : false
+    }
+});
+
+Template.report_item.events({
+    'click .deleteReport'(event, template) {
+        event.preventDefault();
+        const result = window.confirm('Tem certeza que deseja deletar este relatório permanentemente?');
+        if (!result) return;
+        const clickedItem = $(event.currentTarget);
+        const reportId = clickedItem.attr('data-report-id')
+        Meteor.call('reports.delete', reportId)
+    },
+})

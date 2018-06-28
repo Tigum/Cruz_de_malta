@@ -27,6 +27,10 @@ Reports.schema = new SimpleSchema({
   date: {
     type: String
   },
+  balance: {
+    type: Number,
+    decimal: true
+  },
   contracts: {
     type: [Object]
   },

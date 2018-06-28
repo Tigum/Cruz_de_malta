@@ -35,6 +35,7 @@ Template.add_report.events({
 
         let contracts = []
         let patiosNames = []
+        let balances = []
         let reportContractStatus
         const month = $('.month_selected').val()
         const year = $('.year_selected').val()
@@ -74,13 +75,21 @@ Template.add_report.events({
             reportContractStatus = 'Contratos arquivados'
         }
 
+        contracts.map(function(element){
+            balances.push(element.balance)
+        })
+
+        const sum = balances.reduce(add, 0);
+        function add(a, b) {return a + b}
+        console.log('sum', sum)
         const doc = {
             period: month + '/' + year,
             patios: patiosNames[0] == 'Todos patios' ? ['Todos patios'] : patiosNames,
             contractStatus: reportContractStatus,
             createdAt: new Date(),
             date: moment(new Date()).format('DD/MM/YYYY'),
-            contracts: contracts
+            contracts: contracts,
+            balance: sum
         }
         Meteor.call('reports.insert', doc)
         alert('Relatório gerado')

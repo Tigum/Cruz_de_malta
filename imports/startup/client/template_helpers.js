@@ -19,5 +19,13 @@ Template.registerHelper("cutString", function cutString(string) {
 });
 
 Template.registerHelper("countContracts", function countContracts(contractsArray) {
-    return contractsArray ? contractsArray.length + ' contratos' : 'Contract count not working';
+    if(!contractsArray) return
+
+    if(contractsArray.length == 1 || contractsArray.length == 0) {
+        return contractsArray ? contractsArray.length + ' contrato' : 'Contract count not working';
+    }else{
+        return contractsArray ? contractsArray.length + ' contratos' : 'Contract count not working';
+    }
+    
 });
+

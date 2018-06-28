@@ -44,12 +44,15 @@
                 <td class="uppercase">{{cutString content._id}}</td>
                 <td>{{content.date}}</td>
                 <td>{{content.contractStatus}}</td>
-                <td>{{countContracts content.contracts}}</td>
+                <td><a class="linkConfig seeContracts">{{countContracts content.contracts}}</a></td>
                 <td class="uppercase">{{content.period}}</td>
                 <td class="uppercase">{{#if content.patios}}{{content.patios}}{{else}}TODOS PATIOS{{/if}}</td>
-                <td class="uppercase">balanço</td>
+                {{#if isProfitable content._id}}
+                <td class="uppercase alert alert-success">R${{content.balance}}</td>
+                {{else}}
+                <td class="uppercase alert alert-danger">R${{content.balance}}</td>
+                {{/if}}
                 <td>
-                    <a class="linkConfig seeContracts" data-report-id={{content._id}}>Ver contratos</a> &nbsp; &nbsp;
                     <a class="linkConfig deleteReport" data-report-id={{content._id}}>Deletar</a> &nbsp; &nbsp;
                 </td>
             </tr>
