@@ -68,7 +68,6 @@ Template.navbar.events({
     },
     'click .create_user'(event, template) {
         event.preventDefault();
-        console.log('entrou')
         $('#new_user_modal').modal('show');
     },
 })

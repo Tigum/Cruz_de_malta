@@ -15,48 +15,76 @@ import '../../ui/pages/report_details/report_details.js';
 FlowRouter.route('/', {
   name: 'contracts',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'contracts' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'contracts' });
+    }
   },
 });
 
 FlowRouter.route('/login', {
-  name: 'contracts',
+  name: 'login',
   action() {
-    BlazeLayout.render('login');
+    if (Meteor.userId()) {
+      BlazeLayout.render('wrapper', { content: 'contracts' });
+    } else {
+      BlazeLayout.render('login');
+    }
   },
 });
 
 FlowRouter.route('/contracts_arquived', {
   name: 'contracts_arquived',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'contracts_arquived' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'contracts_arquived' });
+    }
   },
 });
 
 FlowRouter.route('/reports', {
   name: 'reports',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'reports' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'reports' });
+    }
   },
 });
 
 FlowRouter.route('/regions', {
   name: 'regions',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'regions' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'regions' });
+    }
   },
 });
 
 FlowRouter.route('/patios', {
   name: 'patios',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'patios' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'patios' });
+    }
   },
 });
 
 FlowRouter.route('/report_details', {
   name: 'report_details',
   action() {
-    BlazeLayout.render('wrapper',  { content: 'report_details' });
+    if (!Meteor.userId()) {
+      FlowRouter.redirect("/login")
+    } else {
+      BlazeLayout.render('wrapper', { content: 'report_details' });
+    }
   },
 });
