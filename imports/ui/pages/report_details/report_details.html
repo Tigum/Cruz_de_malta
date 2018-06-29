@@ -1,7 +1,7 @@
 <template name="report_details">
         {{#if Template.subscriptionsReady}}
             {{#if contracts}}
-            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detalhes de relatório gerado em {{reportDate}} - <a class="linkConfig" href="/reports" style="font-size: 15px !important;">(Voltar)</a></h1>
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detalhes de relatório gerado em {{reportDate}}  <a class="linkConfig" href="/reports" style="font-size: 15px !important;">(Voltar)</a></h1>
             <table class="table table-striped animated fadeIn">
                 <thead class="thead-dark text-center">
                     <tr>
@@ -21,7 +21,7 @@
             </table>
             {{> add_value}}
             {{> add_reason}}
-            {{> see_details}}
+            {{> see_details}} 
     
             {{else}}
             <div class="row logoPageMarginTop">
