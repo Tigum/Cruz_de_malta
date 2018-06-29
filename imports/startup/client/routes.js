@@ -9,6 +9,7 @@ import '../../ui/pages/regions/regions.js';
 import '../../ui/pages/patios/patios.js';
 import '../../ui/pages/reports/reports.js';
 import '../../ui/pages/login/login.js';
+import '../../ui/pages/report_details/report_details.js';
 
 // Set up all routes in the app
 FlowRouter.route('/', {
@@ -50,5 +51,12 @@ FlowRouter.route('/patios', {
   name: 'patios',
   action() {
     BlazeLayout.render('wrapper',  { content: 'patios' });
+  },
+});
+
+FlowRouter.route('/report_details', {
+  name: 'report_details',
+  action() {
+    BlazeLayout.render('wrapper',  { content: 'report_details' });
   },
 });

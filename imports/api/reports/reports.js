@@ -34,7 +34,7 @@ Reports.schema = new SimpleSchema({
   contracts: {
     type: [Object]
   },
-  'contracts.$.id':{
+  'contracts.$._id':{
     type: String,
     optional: true,
   },
@@ -87,8 +87,8 @@ Reports.schema = new SimpleSchema({
     optional: true,
     decimal: true
   },
-  'contracts.$.region.id':{
-    type: Number,
+  'contracts.$.region._id':{
+    type: String,
     optional: true,
     decimal: true
   },

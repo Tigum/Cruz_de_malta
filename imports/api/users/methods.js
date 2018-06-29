@@ -13,6 +13,12 @@ Meteor.methods({
     },
     'user.remove'(userId) {
         Meteor.users.remove({ _id: userId })
+    },
+    'user.addReportId'(userId, reportId) {
+        Meteor.users.update({ _id: userId }, {$set:{reportId:reportId}})
+    },
+    'user.addReportDetails'(userId, reportDetails) {
+        Meteor.users.update({ _id: userId }, {$set:{reportDetails:reportDetails}})
     }
 
 });

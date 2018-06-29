@@ -56,4 +56,19 @@ Template.report_item.events({
         const reportId = clickedItem.attr('data-report-id')
         Meteor.call('reports.delete', reportId)
     },
+    'click .seeContracts'(event, template) {
+        event.preventDefault();
+        const clickedItem = $(event.currentTarget);
+        const reportId = clickedItem.attr('data-report-id')
+        let contractsIds = []
+        const contracts = Reports.findOne({_id: reportId}).contracts
+
+        contracts.map(function(element){
+            contractsIds.push(element._id)
+        })
+
+        Meteor.call('user.addReportId', Meteor.userId(), reportId)
+        Meteor.call('user.addReportDetails', Meteor.userId(), contractsIds)
+        FlowRouter.go('/report_details')
+    },
 })

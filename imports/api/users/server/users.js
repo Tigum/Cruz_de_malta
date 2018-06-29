@@ -5,6 +5,8 @@ Accounts.onCreateUser((options, user) => {
   user.email = options.surname;
   user.password = options.password;
   user.confirmpassword = options.confirmpassword;
+  user.reportId = options.reportId;
+  user.reportDetails = options.reportDetails;
   
   return user;
 });
