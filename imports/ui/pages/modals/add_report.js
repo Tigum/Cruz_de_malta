@@ -94,6 +94,7 @@ Template.add_report.events({
         Meteor.call('reports.insert', doc)
         alert('Relatório gerado')
         $('#add_report_modal').modal('toggle');
+        FlowRouter.go('/reports')
 
     },
     'click .custom-control-input'(event, template) {
