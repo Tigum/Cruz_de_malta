@@ -26,11 +26,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/login', {
   name: 'login',
   action() {
-    if (Meteor.userId()) {
-      BlazeLayout.render('wrapper', { content: 'contracts' });
-    } else {
-      BlazeLayout.render('login');
-    }
+    BlazeLayout.render('login');
   },
 });
 

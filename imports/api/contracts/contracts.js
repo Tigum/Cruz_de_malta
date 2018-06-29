@@ -79,6 +79,10 @@ Contracts.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
+  'debitsAndCredits.$.secondId':{
+    type: String,
+    optional: true,
+  },
   'debitsAndCredits.$.type':{
     type: String,
     optional: true,

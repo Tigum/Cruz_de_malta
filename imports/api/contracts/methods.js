@@ -24,7 +24,7 @@ Meteor.methods({
         return Contracts.update({ _id: contractId }, {$push: {debitsAndCredits: doc}});
     },
     'contracts.removevalue'(contractId, valueId) {
-        return Contracts.update({ _id: contractId }, {$pull: {debitsAndCredits: {id: valueId}}});
+        return Contracts.update({ _id: contractId }, {$pull: {debitsAndCredits: {secondId: valueId}}}, { multi: false });
     },
     'contracts.addbalance'(contractId, balance, profitable) {
         return Contracts.update({ _id: contractId }, {$set:{balance: balance, profitable: profitable}});

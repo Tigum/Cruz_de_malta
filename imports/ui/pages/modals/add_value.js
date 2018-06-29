@@ -60,7 +60,8 @@ Template.add_value.events({
                 id: $('.chosen_reason_debit').val(),
                 value: -parseFloat($('.reason_value_debit').val()).toFixed(2),
                 reason: Reasons.findOne({_id: $('.chosen_reason_debit').val()}) ? Reasons.findOne({_id: $('.chosen_reason_debit').val()}).name : 'name not found',
-                type: 'Débito'
+                type: 'Débito',
+                secondId: Random.id([17])
             }
             Meteor.call('contracts.addvalue', contractId, doc)
             alert('Débito adicionado ao contrato')
@@ -71,7 +72,8 @@ Template.add_value.events({
                 id: $('.chosen_reason_credit').val(),
                 value: parseFloat($('.reason_value_credit').val()).toFixed(2),
                 reason: Reasons.findOne({_id: $('.chosen_reason_credit').val()}) ? Reasons.findOne({_id: $('.chosen_reason_credit').val()}).name : 'name not found',
-                type: 'Crédito'
+                type: 'Crédito',
+                secondId: Random.id([17])
             }
             Meteor.call('contracts.addvalue', contractId, doc)
             alert('Crédito adicionado ao contrato')

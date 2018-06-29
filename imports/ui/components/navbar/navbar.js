@@ -60,11 +60,11 @@ Template.navbar.events({
         $('#add_report_modal').modal('show');
     },
     'click .logoff'(event, template) {
-        event.preventDefault();
         const result = window.confirm('Você tem certeza que desejar deslogar?');
         if (!result) return;
         Meteor.logout();
         FlowRouter.go('/login')
+        location.reload()
     },
     'click .create_user'(event, template) {
         event.preventDefault();

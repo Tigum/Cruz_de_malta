@@ -1,6 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import './login.html';
 
+Template.login.onCreated(function () {
+    this.autorun(() => {
+        if(Meteor.user()){
+            FlowRouter.go('/')
+        }
+    })
+})
+
 Template.login.events({
     'click .login'(event, template) {
         event.preventDefault();
