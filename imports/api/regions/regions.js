@@ -31,3 +31,11 @@ Regions.publicFields = {
   price: 1,
   createdAt: 1
 };
+
+Regions.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});
+
+
