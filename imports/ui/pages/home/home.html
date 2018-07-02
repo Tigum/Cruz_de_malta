@@ -1,7 +1,7 @@
 <template name="contracts">
     {{#if Template.subscriptionsReady}}
         {{#if contracts}}
-        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contratos Ativos</h1>
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contratos Ativos ({{activeContracts}}, {{pendingContracts}}, {{expiredContracts}})</h1>
         <table class="table table-striped animated fadeIn">
             <thead class="thead-dark text-center">
                 <tr>

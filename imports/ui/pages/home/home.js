@@ -45,6 +45,34 @@ Template.contracts.helpers({
             return Contracts.find(selector, options) ? Contracts.find(selector, options).fetch() : []
         }
     },
+    activeContracts: () => Contracts.find({status: 'new'}) ? 'Total: '+Contracts.find({status: 'new'}).fetch().length : '0',
+    pendingContracts() {
+        const allContracts = Contracts.find({status: 'new'}) ? Contracts.find({status: 'new'}).fetch() : []
+        let pendingContracts = []
+
+        allContracts.map(function(element){
+            let pendingDate = moment(element.createdAt).add(19, 'days')
+            let expiredDate = moment(element.createdAt).add(30, 'days')
+            if (moment().isAfter(pendingDate) && moment().isBefore(expiredDate)) {
+                pendingContracts.push(element._id)
+            }
+        })
+
+        return pendingContracts ? 'Mais de 20 dias: '+pendingContracts.length : 'Mais de 20 dias: 0'
+    },
+    expiredContracts() {
+        const allContracts = Contracts.find({status: 'new'}) ? Contracts.find({status: 'new'}).fetch() : []
+        let expiredContracts = []
+
+        allContracts.map(function(element){
+            let expiredDate = moment(element.createdAt).add(30, 'days')
+            if (moment().isAfter(expiredDate) || moment().isSame(expiredDate)) {
+                expiredContracts.push(element._id)
+            }
+        })
+
+        return expiredContracts ? 'Mais de 30 dias: '+expiredContracts.length : 'Mais de 30 dias: 0'
+    },
 });
 
 Template.contract_item.helpers({
