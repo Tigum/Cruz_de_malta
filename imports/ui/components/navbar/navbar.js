@@ -6,6 +6,8 @@ import '../../pages/modals/add_patio.js'
 import '../../pages/modals/add_report.js'
 import '../../pages/modals/reasons.js'
 import '../../pages/modals/new_user.js'
+import '../../pages/modals/pendencies.js'
+import '../../pages/modals/add_pendency.js'
 import { Session } from "meteor/session";
 
 Template.navbar.onCreated(function () {
@@ -69,5 +71,9 @@ Template.navbar.events({
     'click .create_user'(event, template) {
         event.preventDefault();
         $('#new_user_modal').modal('show');
+    },
+    'click .edit_pendencies'(event, template) {
+        event.preventDefault();
+        $('#pendencies_modal').modal('show');
     },
 })

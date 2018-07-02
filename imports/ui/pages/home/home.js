@@ -161,13 +161,13 @@ Template.contract_item.events({
         Session.set('contractId', contractId)
         $('#see_details_modal').modal('show');
     },
-    'click .arquiveContract'(event, template) {
-        event.preventDefault();
-        const result = window.confirm('Tem certeza que deseja arquivar esse contrato?');
-        if (!result) return;
-        const clickedItem = $(event.currentTarget);
-        const contractId = clickedItem.attr('data-contract-id')
-        Session.set('contractId', contractId)
-        Meteor.call('contracts.arquive', contractId)
-    },
+    // 'click .arquiveContract'(event, template) {
+    //     event.preventDefault();
+    //     const result = window.confirm('Tem certeza que deseja arquivar esse contrato?');
+    //     if (!result) return;
+    //     const clickedItem = $(event.currentTarget);
+    //     const contractId = clickedItem.attr('data-contract-id')
+    //     Session.set('contractId', contractId)
+    //     Meteor.call('contracts.arquive', contractId)
+    // },
 })

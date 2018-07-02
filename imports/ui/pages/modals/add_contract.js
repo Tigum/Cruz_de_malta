@@ -84,6 +84,12 @@ Template.add_contract.events({
         if (!result) return;
         Meteor.call('contracts.delete', Session.get('contractId'))
     },
+    'click .archiveContract'(event, template) {
+        event.preventDefault();
+        const result = window.confirm('Tem certeza que deseja arquivar esse contrato?');
+        if (!result) return;
+        Meteor.call('contracts.arquive', Session.get('contractId'))
+    },
 })
 
 function clearAddContractForm() {

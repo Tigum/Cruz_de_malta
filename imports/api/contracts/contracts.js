@@ -99,7 +99,23 @@ Contracts.schema = new SimpleSchema({
   profitable: {
     type: Boolean,
     optional: true
-  }
+  },
+  pendencies: {
+    type: [Object],
+    optional: true,
+  },
+  'pendencies.$.description':{
+    type: String,
+    optional: true,
+  },
+  'pendencies.$._id':{
+    type: String,
+    optional: true,
+  },
+  'pendencies.$.status':{
+    type: String,
+    optional: true,
+  },
 });
 
 Contracts.attachSchema(Contracts.schema);
@@ -117,7 +133,8 @@ Contracts.publicFields = {
     debitsAndCredits: 1,
     status: 1,
     balance: 1,
-    profitable: 1
+    profitable: 1,
+    pendencies: 1
 };
 
 Contracts.deny({
