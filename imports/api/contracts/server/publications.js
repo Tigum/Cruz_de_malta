@@ -20,3 +20,7 @@ Meteor.publish('contract', function (contractId) {
 Meteor.publish('contracts.specific', function (contractIds) {
     return Contracts.find({ _id: { $in: contractIds } })
 })
+
+Meteor.publish('contract.specific', function (contractId) {
+    return Contracts.find({ _id: contractId })
+})

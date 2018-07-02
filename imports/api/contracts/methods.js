@@ -35,4 +35,7 @@ Meteor.methods({
     'contracts.reopen'(contractId) {
         return Contracts.update({ _id: contractId }, {$set:{status: 'new'}});
     },
+    'contracts.addpendency'(contractId, doc) {
+        return Contracts.update({ _id: contractId }, {$push: {pendencies: doc}});
+    },
 });

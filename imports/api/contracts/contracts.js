@@ -116,6 +116,10 @@ Contracts.schema = new SimpleSchema({
     type: String,
     optional: true,
   },
+  'pendencies.$.createdAt':{
+    type: Date,
+    optional: true,
+  },
 });
 
 Contracts.attachSchema(Contracts.schema);

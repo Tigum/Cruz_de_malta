@@ -3,6 +3,7 @@ import '../modals/add_contract.js';
 import '../modals/add_value.js';
 import '../modals/add_reason.js';
 import '../modals/see_details.js';
+import '../modals/current_pendencies.js';
 import '../../components/pre-loader/pre-loader.js';
 import '../../components/navbar/navbar.js';
 import { Contracts } from '../../../api/contracts/contracts';
@@ -161,13 +162,12 @@ Template.contract_item.events({
         Session.set('contractId', contractId)
         $('#see_details_modal').modal('show');
     },
-    // 'click .arquiveContract'(event, template) {
-    //     event.preventDefault();
-    //     const result = window.confirm('Tem certeza que deseja arquivar esse contrato?');
-    //     if (!result) return;
-    //     const clickedItem = $(event.currentTarget);
-    //     const contractId = clickedItem.attr('data-contract-id')
-    //     Session.set('contractId', contractId)
-    //     Meteor.call('contracts.arquive', contractId)
-    // },
+    'click .pendencies'(event, template) {
+        event.preventDefault();
+        Session.set('selectedPendencies', [])
+        const clickedItem = $(event.currentTarget);
+        const contractId = clickedItem.attr('data-contract-id')
+        Session.set('contractId', contractId)
+        $('#current_pendencies_modal').modal('show');
+    },
 })
