@@ -7,7 +7,7 @@ import '../../components/pre-loader/pre-loader.js';
 import '../../components/navbar/navbar.js';
 import { Contracts } from '../../../api/contracts/contracts';
 import { Regions } from '../../../api/regions/regions';
-
+import moment from "moment";
 
 Template.contracts.onCreated(function () {
     Session.get('search', '')
@@ -48,6 +48,15 @@ Template.contracts.helpers({
 });
 
 Template.contract_item.helpers({
+    contractPending(contractId){
+        const contractDate = Contracts.findOne({_id: contractId}).createdAt
+        const pendingDate = moment(contractDate).add(19, 'days')
+        const expiredDate = moment(contractDate).add(30, 'days')
+
+        if (moment().isAfter(pendingDate) && moment().isBefore(expiredDate)) return 'alert alert-warning'
+        if (moment().isAfter(expiredDate) || moment().isSame(expiredDate)) return 'alert alert-danger'
+
+    },
     regionName(regionId) {
         return Regions.findOne({_id: regionId}) ? Regions.findOne({_id: regionId}).name : []
     },

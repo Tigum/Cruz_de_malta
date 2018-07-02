@@ -44,18 +44,18 @@
 <template name="contract_item">
     {{#if Template.subscriptionsReady}}
         <tr>
-            <td class="uppercase">{{content.plate}}</td>
-            <td>{{content.date}}</td>
-            <td>{{content.renavam}}</td>
-            <td>{{content.chassis}}</td>
-            <td class="uppercase">{{content.patio}}</td>
-            <td class="uppercase">{{content.region.name}} - {{formatPrice content.region.price}}</td>
+            <td class="uppercase {{contractPending content._id}}">{{content.plate}}</td>
+            <td class="{{contractPending content._id}}">{{content.date}}</td>
+            <td class="{{contractPending content._id}}">{{content.renavam}}</td>
+            <td class="{{contractPending content._id}}">{{content.chassis}}</td>
+            <td class="uppercase {{contractPending content._id}}">{{content.patio}}</td>
+            <td class="uppercase {{contractPending content._id}}">{{content.region.name}} - {{formatPrice content.region.price}}</td>
             {{#if content.profitable}}
             <td class="contractBalance alert alert-success">Lucro de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
             {{else}}
             <td class="contractBalance alert alert-danger">Prejuízo de {{balance content._id}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
             {{/if}}
-            <td>
+            <td class="{{contractPending content._id}}">
                 <a class="linkConfig addValueToContract" data-contract-id={{content._id}}>Adicionar valor</a> &nbsp; &nbsp;
                 <a class="linkConfig editContract" data-contract-id={{content._id}}>Editar</a> &nbsp; &nbsp;
                 <a class="linkConfig arquiveContract" data-contract-id={{content._id}}>Arquivar</a>

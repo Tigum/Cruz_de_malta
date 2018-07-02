@@ -81,7 +81,7 @@ Template.add_report.events({
 
         const sum = balances.reduce(add, 0);
         function add(a, b) {return a + b}
-        console.log('sum', sum)
+
         const doc = {
             period: month + '/' + year,
             patios: patiosNames[0] == 'Todos patios' ? ['Todos patios'] : patiosNames,
