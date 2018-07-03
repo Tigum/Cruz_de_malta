@@ -24,29 +24,25 @@
                             <input type="text" class="form-control contract_renavam">
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label model-item-text">Chassis (opcional):</label>
+                            <label class="col-form-label model-item-text">Status (opcional):</label>
                             <input type="text" class="form-control contract_chassis">
                         </div>
                         <br>
                         <div class="form-group">
                             <select class="custom-select custom-select-lg mb-3 contract_patio uppercase">
                                 <option value="not_selected" selected>Selecione o pátio*</option>
-                                {{#if Template.subscriptionsReady}}
                                     {{#each patios}}
                                         <option class="uppercase" value="{{this.name}}">{{this.name}}</option>
                                     {{/each}}
-                                {{/if}}
                             </select>
                         </div>
                         <br>
                         <div class="form-group">
                             <select class="custom-select custom-select-lg mb-3 contract_region uppercase">
                                 <option value="not_selected" selected>Selecione a região*</option>
-                                {{#if Template.subscriptionsReady}}
                                     {{#each regions}}
                                         <option class="uppercase" value="{{this.name}}">{{this.name}} - {{formatPrice this.price}}</option>
                                     {{/each}}
-                                {{/if}}
                             </select>
                         </div>
                     </form>

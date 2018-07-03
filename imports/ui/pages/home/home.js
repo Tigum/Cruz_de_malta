@@ -25,7 +25,7 @@ Template.contracts.helpers({
         let selector = { status: 'new' };
         let options = { sort: { createdAt: -1 } }
 
-        if (filter.length > 0) {
+        if (filter.length > 1) {
             let regexOptions = {
                 $regex: filter,
                 $options: 'i',
@@ -140,6 +140,7 @@ Template.contract_item.events({
         const contractId = clickedItem.attr('data-contract-id')
         Session.set('contractId', contractId)
         const doc = Contracts.findOne({_id: contractId})
+        console.log('doc', doc)
         $('.contract_plate').val(doc.plate)
         $('.contract_renavam').val(doc.renavam)
         $('.contract_chassis').val(doc.chassis)

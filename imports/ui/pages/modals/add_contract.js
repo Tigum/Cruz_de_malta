@@ -2,6 +2,7 @@ import { Session } from "meteor/session";
 import './add_contract.html';
 import '../../components/navbar/navbar.js';
 import '../../pages/home/home.js';
+import '../../pages/contracts_arquived/contracts_arquived.js';
 import '../../components/pre-loader/pre-loader.js';
 import { Regions } from '../../../api/regions/regions.js';
 import { Patios } from "../../../api/patios/patios";
@@ -9,10 +10,8 @@ import moment from "moment";
 
 Template.add_contract.onCreated(function () {
     this.autorun(() => {
-        if(FlowRouter.getRouteName() ==  'contracts'){
         this.subscribe('regions')
         this.subscribe('patios')
-        }
     })    
 })
 

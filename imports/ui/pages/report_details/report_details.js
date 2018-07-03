@@ -26,7 +26,7 @@ Template.report_details.helpers({
         let selector = { _id: {$in: Meteor.user().reportDetails} };
         let options = { sort: { createdAt: -1 } }
 
-        if (filter.length > 0) {
+        if (filter.length > 1) {
             let regexOptions = {
                 $regex: filter,
                 $options: 'i',
