@@ -21,6 +21,13 @@
             {{/each}}
         </tbody>
     </table>
+    {{#if hideButton}}
+    <div class="row">
+        <div class="col-12 text-center">
+            <button type="button" class="btn btn-primary buttonModalSave seeMore">Ver mais contratos...</button>
+        </div>
+    </div>
+    {{/if}}
     {{> add_value}} 
     {{> add_reason}} 
     {{> see_details}} 

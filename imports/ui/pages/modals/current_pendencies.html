@@ -13,14 +13,46 @@
                     <div class="row">
                         <div class="col-12">
                             {{#if pendencies}}
-                            {{#each pendencies}}
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="{{this._id}}" value="{{this._id}}" data-pendency="{{this._id}}">
-                                <label class="custom-control-label checkBoxConfig uppercase" for="{{this._id}}">{{this.description}}</label><br>
+                            <div class="form-group">
+                                <select class="custom-select custom-select-lg mb-3 contract_pendency_selected uppercase">
+                                    <option value="not_selected" selected>Selecione a pendência*</option>
+                                        {{#each pendencies}}
+                                            <option class="uppercase" value="{{this._id}}">{{this.description}}</option>
+                                        {{/each}}
+                                </select>
                             </div>
-                            {{/each}}
 
-                            
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button type="button" class="btn btn-primary buttonModalSave addPendencyToContract">Adicionar pendência</button>
+                                </div>
+                            </div>
+                            <hr>
+ 
+                            {{#if currentPendencies}}
+                            <h4>Pendências do contrato no momento:</h4>
+                            <table class="table table-striped">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th class="fontSizeDetails" scope="col">Descrição da pendência</th>
+                                        <th class="fontSizeDetails" scope="col">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    {{#each currentPendencies}}
+                                    <tr>
+                                        <td class="uppercase fontSizeDetails">{{this.description}}</td>
+                                        <td>
+                                            <a class="linkConfig removePendency fontSizeDetails" data-pendency-id="{{this._id}}">Remover</a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            {{else}}
+                            <h4>Contrato sem pendências no momento.</h4>
+                            {{/if}}
+
                             {{else}}
                             <div class="row">
                                 <div class="col-12 center-align">
@@ -41,9 +73,10 @@
                     {{/if}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary buttonModalSave addPendencyToContract">Adicionar pendência</button>
+                    <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Fechar</button>
+                    <!-- <button type="button" class="btn btn-primary buttonModalSave">Fechar</button> -->
                 </div>
+                
             </div>
         </div>
     </div>

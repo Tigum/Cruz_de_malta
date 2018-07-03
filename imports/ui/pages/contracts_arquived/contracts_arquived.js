@@ -10,9 +10,10 @@ import { Regions } from '../../../api/regions/regions';
 
 
 Template.contracts_arquived.onCreated(function () {
-    Session.get('search', '')
+    Session.set('search', '')
+    Session.set('contractsLimit', 20)
     this.autorun(() => {
-        this.subscribe('contracts.done')
+        this.subscribe('contracts.limit', Session.get('contractsLimit'))
     })    
 })
 
@@ -45,6 +46,10 @@ Template.contracts_arquived.helpers({
             return Contracts.find(selector, options) ? Contracts.find(selector, options).fetch() : []
         }
     },
+    hideButton() {
+        const contracts = Contracts.find({ status: 'done'}) ? Contracts.find({ status: 'done'}).fetch() : []
+        return contracts.length == Session.get('contractsLimit') ? true : false
+    }
 });
 
 Template.contract_item_arquived.helpers({
@@ -132,5 +137,13 @@ Template.contract_item_arquived.events({
         const contractId = clickedItem.attr('data-contract-id')
         Session.set('contractId', contractId)
         Meteor.call('contracts.reopen', contractId)
+    },
+})
+
+
+Template.contracts_arquived.events({
+    'click .seeMore'(event, template) {
+        event.preventDefault();
+        Session.set('contractsLimit', Session.get('contractsLimit') + 20) 
     },
 })

@@ -38,4 +38,7 @@ Meteor.methods({
     'contracts.addpendency'(contractId, doc) {
         return Contracts.update({ _id: contractId }, {$push: {pendencies: doc}});
     },
+    'contracts.removependency'(contractId, pendencyId) {
+        return Contracts.update({ _id: contractId }, {$pull: {pendencies: {_id: pendencyId}}});
+    },
 });

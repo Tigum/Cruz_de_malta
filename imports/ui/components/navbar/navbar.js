@@ -55,6 +55,7 @@ Template.navbar.events({
     },
     'click .generate_report'(event, template) {
         event.preventDefault();
+        FlowRouter.go('/reports')
         Session.set('checked', true)
         Session.set('allPatiosSelected', false)
         Session.set('selectedPatios', [])

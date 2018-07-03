@@ -59,7 +59,7 @@ Template.contracts.helpers({
             }
         })
 
-        return pendingContracts ? 'Mais de 20 dias: '+pendingContracts.length : 'Mais de 20 dias: 0'
+        return pendingContracts ? 'Pendentes ou com mais de 20 dias: '+pendingContracts.length : 'Mais de 20 dias: 0'
     },
     expiredContracts() {
         const allContracts = Contracts.find({status: 'new'}) ? Contracts.find({status: 'new'}).fetch() : []
@@ -78,11 +78,13 @@ Template.contracts.helpers({
 
 Template.contract_item.helpers({
     contractPending(contractId){
+        if(!contractId) return
         const contractDate = Contracts.findOne({_id: contractId}).createdAt
         const pendingDate = moment(contractDate).add(19, 'days')
         const expiredDate = moment(contractDate).add(30, 'days')
 
         if (moment().isAfter(pendingDate) && moment().isBefore(expiredDate)) return 'alert alert-warning'
+        if (Contracts.findOne({_id: contractId}).pendencies && Contracts.findOne({_id: contractId}).pendencies.length > 0 && moment().isBefore(expiredDate)) return 'alert alert-warning'
         if (moment().isAfter(expiredDate) || moment().isSame(expiredDate)) return 'alert alert-danger'
 
     },

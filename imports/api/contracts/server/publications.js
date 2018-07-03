@@ -24,3 +24,7 @@ Meteor.publish('contracts.specific', function (contractIds) {
 Meteor.publish('contract.specific', function (contractId) {
     return Contracts.find({ _id: contractId })
 })
+
+Meteor.publish('contracts.limit', function(limit) {
+      return Contracts.find({status: 'done'}, {limit: limit})
+})

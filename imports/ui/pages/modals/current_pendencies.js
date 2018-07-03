@@ -14,51 +14,42 @@ Template.current_pendencies.onCreated(function () {
 
 Template.current_pendencies.helpers({
     pendencies: () => Pendencies.find() ? Pendencies.find().fetch() : [],
-    currentPendencies(contractId) {
-        return Contracts.findOne({ _id: contractId }) ? Contracts.findOne({ _id: contractId }).pendencies : []
-    }
+    currentPendencies: () => Contracts.findOne({ _id: Session.get('contractId') }) ? Contracts.findOne({ _id: Session.get('contractId') }).pendencies : []
 });
 
 Template.current_pendencies.events({
     'click .addPendencyToContract'(event, template) {
         event.preventDefault();
-        const pendenciesIds = Session.get('selectedPendencies')
-        const contractPendencies = Contracts.findOne({ _id: Session.get('contractId') }) ? Contracts.findOne({ _id: Session.get('contractId') }).pendencies : []
-        if (!pendenciesIds) return 'Selecione pendências a serem adicionadas'
+        if (!$('.contract_pendency_selected').val() || $('.contract_pendency_selected').val() == 'not_selected') return alert('Selecione pendências a serem adicionadas')
+        Session.set('addpendency', true)
+        const contractPendencies = Contracts.findOne({ _id: Session.get('contractId') }) && Contracts.findOne({ _id: Session.get('contractId') }).pendencies ? Contracts.findOne({ _id: Session.get('contractId') }).pendencies : []
 
-        pendenciesIds.map(function (element) {
-            const pendency = Pendencies.findOne({ _id: element })
-
-            contractPendencies.map(function (elemento) {
-                if (elemento._id != element) {
-                    Meteor.call('contracts.addpendency', Session.get('contractId'), pendency)
+        if (contractPendencies.length == 0) {
+            Meteor.call('contracts.addpendency', Session.get('contractId'), Pendencies.findOne({ _id: $('.contract_pendency_selected').val() }))
+            return alert('Pendência adicionada ao contrato')
+        } else {
+            contractPendencies.map(function (element) {
+                if (element._id == $('.contract_pendency_selected').val()) {
+                    Session.set('addpendency', false)
                 }
             })
-        })
 
-        alert('Pendências adicionadas ao contrato')
-        $('#current_pendencies_modal').modal('toggle');
+            if (Session.get('addpendency') == true) {
+                Meteor.call('contracts.addpendency', Session.get('contractId'), Pendencies.findOne({ _id: $('.contract_pendency_selected').val() }))
+                return alert('Pendência adicionada ao contrato')
+            } else {
+                Session.set('addpendency', true)
+                return alert('Pendência já adicionada ao contrato. Selecione outra.')
+            }
+
+        }
 
     },
-    'click .custom-control-input'(event, template) {
-        let pendencies = []
-        if (Session.get('selectedPendencies').length == 0) {
-            pendencies = []
-        } else {
-            pendencies = Session.get('selectedPendencies')
-        }
+    'click .removePendency'(event, template) {
+        event.preventDefault();
+        const result = window.confirm('Você tem certeza que desejar remover esta pendência?');
+        if (!result) return;
         const clickedItem = $(event.currentTarget);
-        const pendencyId = clickedItem.attr('data-pendency')
-
-        if (pendencyId) {
-            if (jQuery.inArray(pendencyId, pendencies) !== -1) {
-                pendencies = jQuery.grep(pendencies, function (value) {
-                    return value != pendencyId;
-                });
-            } else {
-                pendencies.push(pendencyId)
-            }
-            Session.set('selectedPendencies', pendencies)
-        }
+        Meteor.call('contracts.removependency', Session.get('contractId'), clickedItem.attr('data-pendency-id'))
     },
 })

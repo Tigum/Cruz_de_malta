@@ -8,7 +8,9 @@ import moment from "moment";
 Template.add_report.onCreated(function () {
     this.autorun(() => {
         this.subscribe('patios')
-        this.subscribe('contracts.all')
+        if(FlowRouter.getRouteName() ==  'reports'){
+            this.subscribe('contracts.all')
+        }
     })
 })
 
