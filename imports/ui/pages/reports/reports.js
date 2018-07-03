@@ -7,8 +7,9 @@ import { Reports } from '../../../api/reports/reports';
 
 Template.reports.onCreated(function () {
     Session.get('search', '')
+    Session.set('reportsLimit', 1)
     this.autorun(() => {
-        this.subscribe('reports')
+        this.subscribe('reports.limit', Session.get('reportsLimit'))
     })
 })
 
@@ -36,6 +37,10 @@ Template.reports.helpers({
         } else {
             return Reports.find(selector, options) ? Reports.find(selector, options).fetch() : []
         }
+    },
+    hideButton() {
+        const reports = Reports.find() ? Reports.find().fetch() : []
+        return reports.length == Session.get('reportsLimit') ? true : false
     }
 });
 
@@ -60,15 +65,17 @@ Template.report_item.events({
         event.preventDefault();
         const clickedItem = $(event.currentTarget);
         const reportId = clickedItem.attr('data-report-id')
-        let contractsIds = []
         const contracts = Reports.findOne({_id: reportId}).contracts
 
-        contracts.map(function(element){
-            contractsIds.push(element._id)
-        })
-
         Meteor.call('user.addReportId', Meteor.userId(), reportId)
-        Meteor.call('user.addReportDetails', Meteor.userId(), contractsIds)
+        Meteor.call('user.addReportDetails', Meteor.userId(), contracts)
         FlowRouter.go('/report_details')
+    },
+})
+
+Template.reports.events({
+    'click .seeMore'(event, template) {
+        event.preventDefault();
+        Session.set('reportsLimit', Session.get('reportsLimit') + 1) 
     },
 })

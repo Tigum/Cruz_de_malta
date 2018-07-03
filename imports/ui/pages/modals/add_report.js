@@ -6,11 +6,16 @@ import { Contracts } from "../../../api/contracts/contracts";
 import moment from "moment";
 
 Template.add_report.onCreated(function () {
+    Session.set('generatingReport', false)
     this.autorun(() => {
         if(FlowRouter.getRouteName() ==  'reports'){
             this.subscribe('patios')
-            this.subscribe('contracts.report', Session.get('monthSelected') + '/' + Session.get('yearSelected'))
-            console.log('contracts', Contracts.find().fetch())
+            let date = Session.get('monthSelected') + '/' + Session.get('yearSelected')
+            if(!date) return 
+            if(date.length == 7 && Session.get('contractsSelected') != null && Session.get('patiosNames') != null){
+                this.subscribe('contracts.report', date, Session.get('contractsSelected'), Session.get('patiosNames'))
+            }
+            
         }
     })
 })
@@ -35,74 +40,74 @@ Template.add_report.events({
         if ($('.month_selected').val() == 'not_selected') return alert('Favor selecionar o mês')
         if ($('.year_selected').val() == 'not_selected') return alert('Favor selecionar o ano')
         if (Session.get('selectedPatios') == []) return alert('Favor selecionar algum patio')
-
-        let contracts = []
-        let patiosNames = []
+        Session.set('generatingReport', true)
+        let allContracts = []
         let balances = []
         let reportContractStatus
-        const month = $('.month_selected').val()
-        const year = $('.year_selected').val()
-        const patios = Session.get('selectedPatios') ? Session.get('selectedPatios') : []
-        const contractStatus = $('.contracts_selected').val() ? $('.contracts_selected').val() : ''
+        const contracts = Contracts.find().fetch()
+
+        if(!contracts || contracts.length == 0) {
+            Session.set('contractsSelected', null)
+            Session.set('patiosNames', null)
+            Session.set('monthSelected', '')
+            Session.set('yearSelected', '')
+            Session.set('generatingReport', false)
+            $('#add_report_modal').modal('toggle');
+            return alert('Nenhum contrato encontrado. Tente novamente.')
+        } 
         
-        if (patios[0] == 'allPatios' && contractStatus == 'all') {
-            reportContractStatus = 'Todos contratos'
-            contracts = Contracts.find({ month: month + '/' + year }).fetch()
-        }
-
-        if (patios[0] == 'allPatios' && contractStatus != 'all') {
-            patiosNames = ['Todos patios']
-
-            contracts = Contracts.find({ month: month + '/' + year, status: contractStatus }).fetch()
-        } else {
-            const selectedPatios = Patios.find({ _id: { $in: patios } }).fetch()
-
-            selectedPatios.map(function (element) {
-                patiosNames.push(element.name)
-            })
-        }
-
-        if (contractStatus == 'all' && patios[0] != 'allPatios') {
-            reportContractStatus = 'Todos contratos'
-            contracts = Contracts.find({ month: month + '/' + year, patio: { $in: patiosNames } }).fetch()
-        }
-
-        if (patios[0] != 'allPatios' && contractStatus != 'all') {
-            contracts = Contracts.find({ month: month + '/' + year, status: contractStatus, patio: { $in: patiosNames } }).fetch()
-        }
-
-        if (contractStatus == 'new') {
-            reportContractStatus = 'Contratos ativos'
-        }
-        if (contractStatus == 'done') {
-            reportContractStatus = 'Contratos arquivados'
-        }
 
         contracts.map(function(element){
+            allContracts.push(element._id)
             balances.push(element.balance)
         })
+
+        if(Session.get('contractsSelected') == 'all') reportContractStatus = 'Todos contratos'
+        if(Session.get('contractsSelected') == 'new') reportContractStatus = 'Contratos ativos'
+        if(Session.get('contractsSelected') == 'done') reportContractStatus = 'Contratos arquivados'
+        let patiosNomes = Session.get('patiosNames') == 'allPatios' ? ['Todos patios'] : Session.get('patiosNames')
 
         const sum = balances.reduce(add, 0);
         function add(a, b) {return a + b}
 
         const doc = {
-            period: month + '/' + year,
-            patios: patiosNames[0] == 'Todos patios' ? ['Todos patios'] : patiosNames,
+            period: Session.get('monthSelected') + '/' + Session.get('yearSelected'),
+            patios: patiosNomes,
             contractStatus: reportContractStatus,
             createdAt: new Date(),
             date: moment(new Date()).format('DD/MM/YYYY'),
-            contracts: contracts,
+            contracts: allContracts,
             balance: sum
         }
 
-        Meteor.call('reports.insert', doc)
-        alert('Relatório gerado')
-        $('#add_report_modal').modal('toggle');
-        FlowRouter.go('/reports')
+        Meteor.call('reports.insert', doc, function(error, result){
+            if(error){
+                console.log('error', error)
+                // toastr.success('Erro ao gerar o relatório!');
+                Session.set('generatingReport', false)
+            }else{
+                if(result) {
+                    Session.set('generatingReport', false)                    
+                }
+
+                if(Session.get('generatingReport') == false){
+                    // toastr.success('Relatório gerado com sucesso!');
+                    $('#add_report_modal').modal('toggle');
+                    Session.set('contractsSelected', null)
+                    Session.set('patiosNames', null)
+                    Session.set('monthSelected', '')
+                    Session.set('yearSelected', '')
+                    FlowRouter.go('/reports')
+                }
+                
+            }
+        })
+        
 
     },
     'click .custom-control-input'(event, template) {
         let patios = []
+        let names = []
         if (Session.get('selectedPatios').length == 0) {
             patios = []
         } else {
@@ -121,6 +126,17 @@ Template.add_report.events({
             }
             Session.set('selectedPatios', patios)
         }
+        let patioNames = Patios.find({_id: {$in: Session.get('selectedPatios')}}) ? Patios.find({_id: {$in: Session.get('selectedPatios')}}).fetch() : ['allPatios']
+        if(patioNames[0] != 'allPatios'){
+            patioNames.map(function(element){
+                names.push(element.name)
+            })
+            Session.set('patiosNames', names)
+        }
+        if(Session.get('selectedPatios')[0] == 'allPatios'){
+            Session.set('patiosNames', ['allPatios'])
+        }
+        
     },
     'click .contracts_selected'(event, template) {
         Session.set('contractsSelected', $('.contracts_selected').val())
@@ -135,4 +151,5 @@ Template.add_report.events({
 
 Template.add_report.helpers({
     patios: () => Patios.find() ? Patios.find().fetch() : [],
+    generatingReport:() => Session.get('generatingReport')
 });

@@ -19,7 +19,13 @@
                     {{#each report in reports}} {{> report_item content=report}} {{/each}}
                 </tbody>
             </table>
-            
+            {{#if hideButton}}
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-primary buttonModalSave seeMore">Ver mais relatórios...</button>
+                </div>
+            </div>
+            {{/if}}
             {{else}}
             <div class="row logoPageMarginTop">
                 <div class="col-12 center-align">
@@ -48,9 +54,9 @@
                 <td class="uppercase">{{content.period}}</td>
                 <td class="uppercase">{{#if content.patios}}{{content.patios}}{{else}}TODOS PATIOS{{/if}}</td>
                 {{#if isProfitable content._id}}
-                <td class="uppercase alert alert-success">R${{content.balance}}</td>
+                <td class="uppercase alert alert-success">{{formatPrice content.balance}}</td>
                 {{else}}
-                <td class="uppercase alert alert-danger">R${{content.balance}}</td>
+                <td class="uppercase alert alert-danger">{{formatNegativePrice content.balance}}</td>
                 {{/if}}
                 <td>
                     <a class="linkConfig deleteReport" data-report-id={{content._id}}>Deletar</a> &nbsp; &nbsp;

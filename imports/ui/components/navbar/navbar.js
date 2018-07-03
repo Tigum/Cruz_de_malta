@@ -59,6 +59,9 @@ Template.navbar.events({
     'click .generate_report'(event, template) {
         event.preventDefault();
         FlowRouter.go('/reports')
+        Session.set('generatingReport', false)
+        Session.set('contractsSelected', null)
+        Session.set('patiosNames', null)
         $('.month_selected').val('not_selected')
         $('.year_selected').val('not_selected')
         $('.contracts_selected').val('not_selected')

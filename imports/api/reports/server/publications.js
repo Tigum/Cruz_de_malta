@@ -8,3 +8,7 @@ Meteor.publish('reports', function () {
 Meteor.publish('report', function (reportId) {
     return Reports.find({_id: reportId})
 })
+
+Meteor.publish('reports.limit', function (limit) {
+    return Reports.find({}, { limit: limit })
+})

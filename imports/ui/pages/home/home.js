@@ -13,7 +13,9 @@ import moment from "moment";
 Template.contracts.onCreated(function () {
     Session.get('search', '')
     this.autorun(() => {
+        if(FlowRouter.getRouteName() == 'contracts'){
         this.subscribe('contracts')
+        }
     })    
 })
 
@@ -99,7 +101,7 @@ Template.contract_item.helpers({
         const contract = Contracts.findOne({_id: contractId})
         const values = contract.debitsAndCredits
         let valuesArray = [contract.region.price]
-        if(!values) {
+        if(!values || values.length == 0) {
             Meteor.call('contracts.addbalance', contractId, contract.region.price, true)
             return contract.region ? 'R$'+contract.region.price.toFixed(2) : 'Não há honorários'
         }

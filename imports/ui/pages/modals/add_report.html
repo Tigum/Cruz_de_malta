@@ -9,6 +9,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    {{#unless generatingReport}}
                     <form>
                         <div class="form-group">
                             <label class="col-form-label model-item-text">Selecione o período abaixo*:</label>
@@ -79,10 +80,20 @@
                             </select>
                         </div>
                     </form>
+                    {{else}}
+                        <div class="row" style="margin-top: 15px !important">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-sm btn-warning spinner">
+                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Gerando relatório...</button>
+                            </div>
+                        </div>
+                    {{/unless}}
                 </div>
                 <div class="modal-footer">
+                    {{#unless generatingReport}}
                     <button type="button" class="btn btn-secondary buttonModalCancel" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary buttonModalSave">Gerar relatório</button>
+                    {{/unless}}
                 </div>
             </div>
         </div>

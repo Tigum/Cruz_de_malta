@@ -38,75 +38,8 @@ Reports.schema = new SimpleSchema({
     optional: true
   },
   contracts: {
-    type: [Object],
+    type: [String],
     optional: true
-  },
-  'contracts.$._id':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.date':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.month':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.renavam':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.chassis':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.patio':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.balance':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.createdAt':{
-    type: Date,
-    optional: true,
-  },
-  'contracts.$.plate':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.profitable':{
-    type: Boolean,
-    optional: true,
-  },
-  'contracts.$.region':{
-    type: Object,
-    optional: true,
-  },
-  'contracts.$.region.name':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.region.price':{
-    type: Number,
-    optional: true,
-    decimal: true
-  },
-  'contracts.$.region._id':{
-    type: String,
-    optional: true,
-    decimal: true
-  },
-  'contracts.$.status':{
-    type: String,
-    optional: true,
-  },
-  'contracts.$.value':{
-    type: Number,
-    optional: true,
-    decimal: true
   },
 });
 

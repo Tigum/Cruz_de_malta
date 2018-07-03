@@ -14,7 +14,7 @@ Template.report_details.onCreated(function () {
     Session.get('search', '')
     this.autorun(() => {
         this.subscribe('user', Meteor.userId())
-        this.subscribe('contracts')
+        this.subscribe('contracts.specific', Meteor.user().reportDetails)
         this.subscribe('report', Meteor.user().reportId)
     })    
 })
