@@ -7,7 +7,7 @@ import { Reports } from '../../../api/reports/reports';
 
 Template.reports.onCreated(function () {
     Session.get('search', '')
-    Session.set('reportsLimit', 1)
+    Session.set('reportsLimit', 20)
     this.autorun(() => {
         this.subscribe('reports.limit', Session.get('reportsLimit'))
     })
@@ -76,6 +76,6 @@ Template.report_item.events({
 Template.reports.events({
     'click .seeMore'(event, template) {
         event.preventDefault();
-        Session.set('reportsLimit', Session.get('reportsLimit') + 1) 
+        Session.set('reportsLimit', Session.get('reportsLimit') + 20) 
     },
 })

@@ -62,6 +62,7 @@ Template.navbar.events({
         Session.set('generatingReport', false)
         Session.set('contractsSelected', null)
         Session.set('patiosNames', null)
+        Session.set('date.length', 0)
         $('.month_selected').val('not_selected')
         $('.year_selected').val('not_selected')
         $('.contracts_selected').val('not_selected')

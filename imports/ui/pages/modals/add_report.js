@@ -7,12 +7,14 @@ import moment from "moment";
 
 Template.add_report.onCreated(function () {
     Session.set('generatingReport', false)
+    Session.set('date.length', 0)
     this.autorun(() => {
         if(FlowRouter.getRouteName() ==  'reports'){
             this.subscribe('patios')
             let date = Session.get('monthSelected') + '/' + Session.get('yearSelected')
             if(!date) return 
-            if(date.length == 7 && Session.get('contractsSelected') != null && Session.get('patiosNames') != null){
+            Session.set('date.length', date.length)
+            if(Session.get('date.length') == 7 && Session.get('contractsSelected') != null && Session.get('patiosNames') != null){
                 this.subscribe('contracts.report', date, Session.get('contractsSelected'), Session.get('patiosNames'))
             }
             
@@ -45,7 +47,7 @@ Template.add_report.events({
         let balances = []
         let reportContractStatus
         const contracts = Contracts.find().fetch()
-
+        
         if(!contracts || contracts.length == 0) {
             Session.set('contractsSelected', null)
             Session.set('patiosNames', null)
