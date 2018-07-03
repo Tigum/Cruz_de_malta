@@ -25,6 +25,14 @@ Meteor.publish('contract.specific', function (contractId) {
     return Contracts.find({ _id: contractId })
 })
 
-Meteor.publish('contracts.limit', function(limit) {
-      return Contracts.find({status: 'done'}, {limit: limit})
+Meteor.publish('contracts.limit', function (limit) {
+    return Contracts.find({ status: 'done' }, { limit: limit })
+})
+
+Meteor.publish('contracts.report', function (month) {
+    return Contracts.find({ month: month })
+    // if (patios[0] == 'allPatios' && status == 'all') return Contracts.find({ month: month })
+    // if (patios[0] != 'allPatios' && status == 'all') return Contracts.find({ month: month, patio: { $in: patio } })
+    // if (patios[0] == 'allPatios' && status != 'all') return Contracts.find({ month: month, status: status })
+    // if (patios[0] != 'allPatios' && status != 'all') return Contracts.find({ month: month, status: status, patio: { $in: patio } })
 })

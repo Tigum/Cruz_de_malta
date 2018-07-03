@@ -59,40 +59,6 @@ Template.report_details_item.helpers({
     regionPrice(regionId) {
         return Regions.findOne({_id: regionId}) ? Regions.findOne({_id: regionId}).price : []
     },
-    balance(contractId) {
-        
-        const contract = Contracts.findOne({_id: contractId})
-        const values = contract.debitsAndCredits
-        let valuesArray = [contract.region.price]
-        if(!values) {
-            Meteor.call('contracts.addbalance', contractId, contract.region.price, true)
-            return contract.region ? 'R$'+contract.region.price.toFixed(2) : 'Não há honorários'
-        }
-        values.map(function(element){
-            if(element.value){
-                valuesArray.push(element.value)
-            }
-        })
-
-        const sum = valuesArray.reduce(add, 0);
-        function add(a, b) {return a + b}
-
-        if(sum == contract.balance && contract.balance){
-            if(sum > 0){
-                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
-            }else{
-                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
-            }
-        }else{
-            if(sum > 0){
-                Meteor.call('contracts.addbalance', contractId, sum, true)
-                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
-            }else{
-                Meteor.call('contracts.addbalance', contractId, sum, false)
-                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
-            }
-        }
-    }
 });
 
 Template.report_details_item.events({

@@ -9,8 +9,10 @@ import moment from "moment";
 
 Template.add_contract.onCreated(function () {
     this.autorun(() => {
+        if(FlowRouter.getRouteName() ==  'contracts'){
         this.subscribe('regions')
         this.subscribe('patios')
+        }
     })    
 })
 

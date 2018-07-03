@@ -5,7 +5,9 @@ import { Patios } from '../../../api/patios/patios';
 
 Template.add_patio.onCreated(function () {
     this.autorun(() => {
+        if(FlowRouter.getRouteName() ==  'patios'){
         this.subscribe('patios')
+        }
     })
 })
 

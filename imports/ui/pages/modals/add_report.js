@@ -7,9 +7,10 @@ import moment from "moment";
 
 Template.add_report.onCreated(function () {
     this.autorun(() => {
-        this.subscribe('patios')
         if(FlowRouter.getRouteName() ==  'reports'){
-            this.subscribe('contracts.all')
+            this.subscribe('patios')
+            this.subscribe('contracts.report', Session.get('monthSelected') + '/' + Session.get('yearSelected'))
+            console.log('contracts', Contracts.find().fetch())
         }
     })
 })
@@ -43,7 +44,7 @@ Template.add_report.events({
         const year = $('.year_selected').val()
         const patios = Session.get('selectedPatios') ? Session.get('selectedPatios') : []
         const contractStatus = $('.contracts_selected').val() ? $('.contracts_selected').val() : ''
-
+        
         if (patios[0] == 'allPatios' && contractStatus == 'all') {
             reportContractStatus = 'Todos contratos'
             contracts = Contracts.find({ month: month + '/' + year }).fetch()
@@ -93,6 +94,7 @@ Template.add_report.events({
             contracts: contracts,
             balance: sum
         }
+
         Meteor.call('reports.insert', doc)
         alert('Relatório gerado')
         $('#add_report_modal').modal('toggle');
@@ -119,6 +121,15 @@ Template.add_report.events({
             }
             Session.set('selectedPatios', patios)
         }
+    },
+    'click .contracts_selected'(event, template) {
+        Session.set('contractsSelected', $('.contracts_selected').val())
+    },
+    'click .month_selected'(event, template) {
+        Session.set('monthSelected', $('.month_selected').val())
+    },
+    'click .year_selected'(event, template) {
+        Session.set('yearSelected', $('.year_selected').val())
     },
 })
 

@@ -14,25 +14,32 @@ Reports.schema = new SimpleSchema({
 
   period: {
     type: String,
+    optional: true
   },
   patios: {
     type: [String],
+    optional: true
   },
   contractStatus: {
     type: String,
+    optional: true
   },
   createdAt: {
-    type: Date
+    type: Date,
+    optional: true
   },
   date: {
-    type: String
+    type: String,
+    optional: true
   },
   balance: {
     type: Number,
-    decimal: true
+    decimal: true,
+    optional: true
   },
   contracts: {
-    type: [Object]
+    type: [Object],
+    optional: true
   },
   'contracts.$._id':{
     type: String,

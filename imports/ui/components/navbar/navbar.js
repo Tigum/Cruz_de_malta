@@ -21,12 +21,14 @@ Template.navbar.onCreated(function () {
 Template.navbar.events({
     'click .add_patio'(event, template) {
         event.preventDefault();
+        FlowRouter.go('/patios')
         Session.set('patioEdit', false)
         $('.patio-input').val('')
         $('#add_patio_modal').modal('show');
     },
     'click .add_region'(event, template) {
         event.preventDefault();
+        FlowRouter.go('/regions')
         $('.region-input').val('')
         $('.region_price').val('')
         Session.set('editRegionMode', false)
@@ -34,6 +36,7 @@ Template.navbar.events({
     },
     'click .add_contract'(event, template) {
         event.preventDefault();
+        FlowRouter.go('/')
         $('.contract_plate').val('')
         $('.contract_renavam').val('')
         $('.contract_chassis').val('')
@@ -56,6 +59,9 @@ Template.navbar.events({
     'click .generate_report'(event, template) {
         event.preventDefault();
         FlowRouter.go('/reports')
+        $('.month_selected').val('not_selected')
+        $('.year_selected').val('not_selected')
+        $('.contracts_selected').val('not_selected')
         Session.set('checked', true)
         Session.set('allPatiosSelected', false)
         Session.set('selectedPatios', [])

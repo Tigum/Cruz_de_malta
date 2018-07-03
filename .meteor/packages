@@ -32,3 +32,4 @@ matb33:bootstrap-glyphicons
 accounts-base
 accounts-password
 random
+mdg:meteor-apm-agent
