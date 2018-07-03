@@ -11,7 +11,7 @@ import { Reports } from '../../../api/reports/reports';
 
 
 Template.report_details.onCreated(function () {
-    Session.get('search', '')
+    Session.set('search', '')
     this.autorun(() => {
         this.subscribe('user', Meteor.userId())
         this.subscribe('contracts.specific', Meteor.user().reportDetails)

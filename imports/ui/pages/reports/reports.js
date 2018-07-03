@@ -6,7 +6,7 @@ import { Reports } from '../../../api/reports/reports';
 
 
 Template.reports.onCreated(function () {
-    Session.get('search', '')
+    Session.set('search', '')
     Session.set('reportsLimit', 20)
     this.autorun(() => {
         this.subscribe('reports.limit', Session.get('reportsLimit'))

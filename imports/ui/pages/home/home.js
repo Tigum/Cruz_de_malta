@@ -11,7 +11,7 @@ import { Regions } from '../../../api/regions/regions';
 import moment from "moment";
 
 Template.contracts.onCreated(function () {
-    Session.get('search', '')
+    Session.set('search', '')
     this.autorun(() => {
         if(FlowRouter.getRouteName() == 'contracts'){
         this.subscribe('contracts')
