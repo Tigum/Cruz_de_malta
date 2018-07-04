@@ -20,8 +20,8 @@ Template.add_value.onDestroyed(function () {
 Template.add_value.helpers({
     debitIsSelected: () => Session.get('typeOfValueSelected') == 'Débito' ? true : false,
     creditIsSelected: () => Session.get('typeOfValueSelected') == 'Crédito' ? true : false,
-    reasonsDebit: () => Reasons.find({type: 'Débito'}) ? Reasons.find({type: 'Débito'}).fetch() : [],
-    reasonsCredit: () => Reasons.find({type: 'Crédito'}) ? Reasons.find({type: 'Crédito'}).fetch() : [],
+    reasonsDebit: () => Reasons.find({ type: 'Débito' }) ? Reasons.find({ type: 'Débito' }).fetch() : [],
+    reasonsCredit: () => Reasons.find({ type: 'Crédito' }) ? Reasons.find({ type: 'Crédito' }).fetch() : [],
 });
 
 
@@ -50,34 +50,80 @@ Template.add_value.events({
     },
     'click .buttonModalSave'(event, template) {
         event.preventDefault();
-        if($('.chosen_reason').val() == 'not_selected') return alert('Favor selecionar uma razão')
+        if ($('.chosen_reason').val() == 'not_selected') return alert('Favor selecionar uma razão')
         const clickedItem = $(event.currentTarget);
         const reasonInfo = clickedItem.attr('data-reason-info')
-        const contractId = Contracts.findOne({_id: Session.get('contractId')}) ? Contracts.findOne({_id: Session.get('contractId')})._id : ''
+        const contractId = Contracts.findOne({ _id: Session.get('contractId') }) ? Contracts.findOne({ _id: Session.get('contractId') })._id : ''
 
-        if(reasonInfo == 'debit'){
+        if (reasonInfo == 'debit') {
             const doc = {
                 id: $('.chosen_reason_debit').val(),
                 value: -parseFloat($('.reason_value_debit').val()).toFixed(2),
-                reason: Reasons.findOne({_id: $('.chosen_reason_debit').val()}) ? Reasons.findOne({_id: $('.chosen_reason_debit').val()}).name : 'name not found',
+                reason: Reasons.findOne({ _id: $('.chosen_reason_debit').val() }) ? Reasons.findOne({ _id: $('.chosen_reason_debit').val() }).name : 'name not found',
                 type: 'Débito',
                 secondId: Random.id([17])
             }
-            Meteor.call('contracts.addvalue', contractId, doc)
-            alert('Débito adicionado ao contrato')
+            Meteor.call('contracts.addvalue', contractId, doc, function (error, result) {
+                if (error) {
+                    console.log(error)
+                }
+                if (result) {
+                    let debitsAndCredits = Contracts.findOne({ _id: Session.get('contractId') }) ? Contracts.findOne({ _id: Session.get('contractId') }).debitsAndCredits : []
+                    let valuesArray = []
+                    const hononary = Contracts.findOne({ _id: Session.get('contractId') }) && Contracts.findOne({ _id: Session.get('contractId') }).region ? Contracts.findOne({ _id: Session.get('contractId') }).region.price : 0
+
+                    valuesArray.push(hononary)
+
+                    debitsAndCredits.map(function (element) {
+                        valuesArray.push(element.value)
+                    })
+                    const sum = valuesArray.reduce(add, 0);
+                    function add(a, b) { return a + b }
+
+                    Meteor.call('contracts.updatebalance', Session.get('contractId'), sum, function(error, result){
+                        if(error) return console.log(error)
+                        if(result) return alert('Débito adicionado ao contrato')
+                    })
+                }
+            })
+            
         }
 
-        if(reasonInfo == 'credit'){
+        if (reasonInfo == 'credit') {
             const doc = {
                 id: $('.chosen_reason_credit').val(),
                 value: parseFloat($('.reason_value_credit').val()).toFixed(2),
-                reason: Reasons.findOne({_id: $('.chosen_reason_credit').val()}) ? Reasons.findOne({_id: $('.chosen_reason_credit').val()}).name : 'name not found',
+                reason: Reasons.findOne({ _id: $('.chosen_reason_credit').val() }) ? Reasons.findOne({ _id: $('.chosen_reason_credit').val() }).name : 'name not found',
                 type: 'Crédito',
                 secondId: Random.id([17])
             }
-            Meteor.call('contracts.addvalue', contractId, doc)
-            alert('Crédito adicionado ao contrato')
+            Meteor.call('contracts.addvalue', contractId, doc, function (error, result) {
+                if (error) {
+                    console.log(error)
+                }
+                if (result) {
+                    let debitsAndCredits = Contracts.findOne({ _id: Session.get('contractId') }) ? Contracts.findOne({ _id: Session.get('contractId') }).debitsAndCredits : []
+                    let valuesArray = []
+                    const hononary = Contracts.findOne({ _id: Session.get('contractId') }) && Contracts.findOne({ _id: Session.get('contractId') }).region ? Contracts.findOne({ _id: Session.get('contractId') }).region.price : 0
+
+                    valuesArray.push(hononary)
+
+                    debitsAndCredits.map(function (element) {
+                        valuesArray.push(element.value)
+                    })
+                    const sum = valuesArray.reduce(add, 0);
+                    function add(a, b) { return a + b }
+
+                    Meteor.call('contracts.updatebalance', Session.get('contractId'), sum, function(error, result){
+                        if(error) return console.log(error)
+                        if(result) return alert('Crédito adicionado ao contrato')
+                    })
+                }
+            })
         }
+
+
+
         $('.reason_value_credit').val()
         $('.chosen_reason_credit').val('not_selected')
         $('#add_value_modal').modal('toggle');

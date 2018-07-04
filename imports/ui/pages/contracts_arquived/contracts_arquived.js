@@ -61,36 +61,26 @@ Template.contract_item_arquived.helpers({
     },
     balance(contractId) {
         
-        const contract = Contracts.findOne({_id: contractId})
-        const values = contract.debitsAndCredits
-        let valuesArray = [contract.region.price]
-        if(!values || values.length == 0) {
-            Meteor.call('contracts.addbalance', contractId, contract.region.price, true)
-            return contract.region ? 'R$'+contract.region.price.toFixed(2) : 'Não há honorários'
-        }
-        values.map(function(element){
-            if(element.value){
-                valuesArray.push(element.value)
-            }
-        })
+        const contract = Contracts.findOne({_id: contractId}) ? Contracts.findOne({_id: contractId}) : ''
 
-        const sum = valuesArray.reduce(add, 0);
-        function add(a, b) {return a + b}
+        if(!contract) return
 
-        if(sum == contract.balance && contract.balance){
-            if(sum > 0){
-                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
-            }else{
-                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
-            }
+        if(contract.balance > 0){
+            return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'R$0.00'
         }else{
-            if(sum > 0){
-                Meteor.call('contracts.addbalance', contractId, sum, true)
-                return  contract.balance ? 'R$'+contract.balance.toFixed(2) : 'Sum not working'
-            }else{
-                Meteor.call('contracts.addbalance', contractId, sum, false)
-                return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'Sum not working'
-            }
+            return  contract.balance ? '-R$'+contract.balance.toFixed(2)*(-1) : 'R$0.00'
+        }
+    },
+    isProfitable(contractId) {
+        
+        const contract = Contracts.findOne({_id: contractId}) ? Contracts.findOne({_id: contractId}) : ''
+
+        if(!contract) return
+        
+        if(contract.balance > 0 || contract.balance == 0){
+            return  true
+        }else{
+            return  false
         }
     }
 });

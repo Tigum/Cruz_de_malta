@@ -41,4 +41,8 @@ Meteor.methods({
     'contracts.removependency'(contractId, pendencyId) {
         return Contracts.update({ _id: contractId }, {$pull: {pendencies: {_id: pendencyId}}});
     },
+    'contracts.updatebalance'(contractId, balance) {
+        return Contracts.update({ _id: contractId }, {$set:{balance: balance}});
+    },
+
 });

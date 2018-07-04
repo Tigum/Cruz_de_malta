@@ -51,10 +51,10 @@
                 <td>{{content.chassis}}</td>
                 <td class="uppercase">{{content.patio}}</td>
                 <td class="uppercase">{{content.region.name}} - {{formatPrice content.region.price}}</td>
-                {{#if content.profitable}}
-                <td class="contractBalance alert alert-success">Lucro de {{content.balance}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
+                {{#if isProfitable content._id}}
+                <td class="contractBalance alert alert-success">Lucro de {{formatPrice content.balance}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
                 {{else}}
-                <td class="contractBalance alert alert-danger">Prejuízo de {{content.balance}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
+                <td class="contractBalance alert alert-danger">Prejuízo de {{formatPrice content.balance}} - <a class="linkConfig seeContractDetails" data-contract-id={{content._id}}>Ver detalhes</a></td>
                 {{/if}}
                 <!-- <td>
                     <a class="linkConfig addValueToContract" data-contract-id={{content._id}}>Adicionar valor</a> &nbsp; &nbsp;

@@ -59,6 +59,18 @@ Template.report_details_item.helpers({
     regionPrice(regionId) {
         return Regions.findOne({_id: regionId}) ? Regions.findOne({_id: regionId}).price : []
     },
+    isProfitable(contractId) {
+        
+        const contract = Contracts.findOne({_id: contractId}) ? Contracts.findOne({_id: contractId}) : ''
+
+        if(!contract) return
+        
+        if(contract.balance > 0 || contract.balance == 0){
+            return  true
+        }else{
+            return  false
+        }
+    }
 });
 
 Template.report_details_item.events({
