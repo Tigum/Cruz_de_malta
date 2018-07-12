@@ -15,4 +15,4 @@ import '../../api/users/server/publications.js';
 import '../../api/users/server/users.js';
 import '../../api/users/methods.js';
 import '../../api/pendencies/methods.js';
-import '../../api/pendencies/server/publications.js';
+import '../../api/pendencies/server/publications.js'; 
